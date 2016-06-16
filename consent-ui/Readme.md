@@ -120,6 +120,16 @@ Another avenue for extension is to use cookies to retain login status or etc. An
 
 
 
+## Further Notes
+
+* Apigee Edge can integrate with a login-and-consent app for OpenID Connect can be implemented in any language.
+We used nodejs here just because it's easy.
+
+* This login-and-consent app is a demonstration, and should not be used in production. It exhibits insecure behavior. For example, it logs inbound POST payloads, which themselves contain passwords. It also allows the form postback to specify userinfo and other data, rather than relying on server-side cookies. DO NOT use this app for production.
+
+
+
+
 ## Appendix: Requests handled Here
 
 You ought to be able to use this webapp as-is, with just the configuration described above. 
@@ -185,12 +195,4 @@ The form contents include:
 
 
 If the user has granted consent, then the login-and-consent app posts to the auth endpoint (on Edge) to get the redirect URL for this OpenID Connect session. The login-and-consent app then responds to the user-agent with a 302, using that redirect URL as the Location header.
-
-
-## Further Notes
-
-* Apigee Edge can integrate with a login-and-consent app for OpenID Connect can be implemented in any language.
-We used nodejs here just because it's easy.
-
-* This login-and-consent app is a demonstration, and should not be used in production. It exhibits insecure behavior. For example, it logs inbound POST payloads, which themselves contain passwords. It also allows the form postback to specify userinfo and other data, rather than relying on server-side cookies. DO NOT use this app for production.
 
