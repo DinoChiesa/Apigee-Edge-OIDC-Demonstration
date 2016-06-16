@@ -1,0 +1,4 @@
+<GetOAuthV2Info name="Get-Application-Attributes">
+  <DisplayName>Get Application Attributes</DisplayName>
+  <ClientId ref="apigee.client_id"></ClientId>
+</GetOAuthV2Info>

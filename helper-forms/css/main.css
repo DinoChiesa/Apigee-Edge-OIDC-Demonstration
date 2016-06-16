@@ -1,0 +1,84 @@
+form div label {
+  float: left;
+  width: 148px;
+  margin: 8px 0;
+}
+form > div > select,
+form > div > div ul, /* chosen */
+form > div > input {
+  float: left;
+  max-width: 660px;
+  margin: 2px 0;
+}
+form > div > div.chosen-container-multi > ul.chosen-choices li.search-field {
+  margin: 3px 5px 3px 12px;
+}
+form > div > div.chosen-container-multi > ul.chosen-choices li.search-choice {
+  margin: 6px 5px 5px 1px;
+}
+.form-group {
+  margin-bottom: 2px;
+}
+form > div > div.chosen-container {
+  margin: 2px 0;
+  max-width: 440px;
+}
+form > div,
+form > div.form-group {
+  display:block;
+  clear:both;
+}
+div.divider {
+  border-top: 1px solid Black;
+}
+#output { 
+  margin-top: 28px;
+  font-size: 160%;
+}
+#output > div {
+  margin-top: 18px;
+}
+body {
+  font-size: 140%;
+}
+
+.cb-element {
+  max-width: 880px;
+  display:block;
+}
+.cb-element:after { 
+  /* clearfix */
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.cb-element .cb-label {
+  float: left;
+  width: 200px;
+}
+.cb-element .cb-value {
+  float: left;
+  max-width: 600px;
+
+  /* all below, to handle really long JWTs */
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+  word-break: break-all;
+  white-space: normal;
+}
+
+.jwt-header {
+  color: #fa003a; 
+}
+.jwt-payload {
+  color: #b100ff; 
+}
+.jwt-signature {
+  color: #3184fb;
+}

@@ -1,0 +1,10 @@
+<OAuthV2 name="OAuthV2-GenerateAccessToken-AuthCode">
+  <DisplayName>OAuthV2: Generate Access Token</DisplayName>
+  <ExternalAuthorization>false</ExternalAuthorization>
+  <Operation>GenerateAccessToken</Operation>
+  <SupportedGrantTypes>
+    <GrantType>authorization_code</GrantType>
+  </SupportedGrantTypes>
+  <Tokens/>
+  <GenerateResponse />
+</OAuthV2>

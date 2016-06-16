@@ -1,0 +1,32 @@
+<ExtractVariables name="Extract-Token-Response">
+  <DisplayName>Extract: Token Response</DisplayName>
+  <Properties/>
+  <Source>response</Source>
+  <JSONPayload>
+    <Variable name="issued_at">
+      <JSONPath>$.issued_at</JSONPath>
+    </Variable>
+    <Variable name="application_name">
+      <JSONPath>$.application_name</JSONPath>
+    </Variable>
+    <Variable name="sub">
+      <JSONPath>$.sub</JSONPath>
+    </Variable>
+    <Variable name="refresh_token_status">
+      <JSONPath>$.refresh_token_status</JSONPath>
+    </Variable>
+    <Variable name="jwt_expires_in">
+      <JSONPath>$.expires_in</JSONPath>
+    </Variable>
+    <Variable name="refresh_token">
+      <JSONPath>$.refresh_token</JSONPath>
+    </Variable>
+    <Variable name="nonce">
+      <JSONPath>$.nonce</JSONPath>
+    </Variable>
+    <Variable name="token_scope">
+      <JSONPath>$.scope</JSONPath>
+    </Variable>
+  </JSONPayload>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

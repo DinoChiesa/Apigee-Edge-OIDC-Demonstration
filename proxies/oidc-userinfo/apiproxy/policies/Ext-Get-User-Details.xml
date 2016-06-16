@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout async="false" continueOnError="false" enabled="true" name="Ext-Get-User-Details">
+    <DisplayName>Ext: Get User Details</DisplayName>
+    <Properties/>
+    <Request clearPayload="true">
+       <Set>
+         <QueryParams>
+           <QueryParam name="access_token">{accesstoken.baas_access_token}</QueryParam>
+         </QueryParams>
+       </Set>
+        <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    </Request>
+    <Response>authenticationResponse</Response>
+    <HTTPTargetConnection>
+        <Properties/>
+      <URL>https://api.usergrid.com/etelco/sandbox/users/{accesstoken.sub}</URL>
+    </HTTPTargetConnection>
+</ServiceCallout>

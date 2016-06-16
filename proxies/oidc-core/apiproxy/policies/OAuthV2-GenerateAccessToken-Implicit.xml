@@ -1,0 +1,17 @@
+<OAuthV2 name="OAuthV2-GenerateAccessToken-Implicit">
+  <DisplayName>OAuthV2: Generate Access Token Implicit</DisplayName>
+  <ExternalAuthorization>false</ExternalAuthorization>
+  <Operation>GenerateAccessTokenImplicitGrant</Operation>
+  <SupportedGrantTypes/>
+  <Scope>req_scope</Scope>
+  <ClientId>client_id</ClientId>
+  <ResponseType>token</ResponseType>
+  <ExpiresIn>600000</ExpiresIn>
+  <Attributes>
+    <Attribute name="sessionid" ref="sessionid" display="true"/>
+    <Attribute name="scope" ref="req_scope" display="true"/>
+    <Attribute name="sub" ref="sub" display="true"/>
+    <Attribute name="baas_access_token" ref="baas_access_token" display="true"/>
+  </Attributes>
+  <UserName>sub</UserName>
+</OAuthV2>

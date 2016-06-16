@@ -1,0 +1,19 @@
+<AssignMessage name='AM-CleanResponseHeaders'>
+  <Remove>
+    <Headers>
+      <Header name='Accept'/>
+      <Header name='user-agent'/>
+      <Header name='Host'/>
+      <Header name='x-forwarded-for'/>
+      <Header name='X-Forwarded-Proto'/>
+      <Header name='X-Forwarded-Port'/>
+      <Header name='apikey'/>
+      <Header name='date'/>
+      <Header name='Authorization'/>
+      <Header name='Signature'/>
+      <Header name='X-Powered-By'/>
+    </Headers>
+  </Remove>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew='false' transport='http' type='response'/>
+</AssignMessage>

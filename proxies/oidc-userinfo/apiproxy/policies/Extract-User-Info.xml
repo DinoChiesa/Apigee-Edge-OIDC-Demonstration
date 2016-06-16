@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="Extract-User-Info">
+    <DisplayName>Extract: User Info</DisplayName>
+    <FaultRules/>
+    <Properties/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <JSONPayload>
+        <Variable name="user_id">
+            <JSONPath>$.entities[0].uuid</JSONPath>
+        </Variable>
+        <Variable name="username">
+            <JSONPath>$.entities[0].username</JSONPath>
+        </Variable>
+        <Variable name="given_name">
+            <JSONPath>$.entities[0].firstname</JSONPath>
+        </Variable>
+      	<Variable name="email">
+            <JSONPath>$.entities[0].email</JSONPath>
+        </Variable>
+        <Variable name="family_name">
+            <JSONPath>$.entities[0].lastname</JSONPath>
+        </Variable>
+        <Variable name="name">
+            <JSONPath>$.entities[0].name</JSONPath>
+        </Variable>
+      	<Variable name="gender">
+            <JSONPath>$.entities[0].gender</JSONPath>
+        </Variable>
+        <Variable name="picture">
+            <JSONPath>$.entities[0].picture</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">authenticationResponse</Source>
+</ExtractVariables>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="openid-connect-userinfo-api">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1439693522921</CreatedAt>
+    <CreatedBy>adminui@apigee.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>openid-connect-userinfo-api</DisplayName>
+    <LastModifiedAt>1445432713786</LastModifiedAt>
+    <LastModifiedBy>adminui@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>Assign-UserInfo-Response</Policy>
+        <Policy>Ext-Build-UserInfo-Response</Policy>
+        <Policy>Ext-Get-User-Details</Policy>
+        <Policy>Extract-User-Info</Policy>
+        <Policy>Security-Verify-Access-Token</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://create.userinfo.response-1.0.js</Resource>
+    </Resources>
+    <TargetServers/>
+    <TargetEndpoints/>
+    <validate>false</validate>
+</APIProxy>

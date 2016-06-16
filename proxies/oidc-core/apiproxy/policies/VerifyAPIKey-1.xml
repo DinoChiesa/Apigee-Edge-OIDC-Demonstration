@@ -1,0 +1,4 @@
+<VerifyAPIKey name="VerifyAPIKey-1">
+    <DisplayName>VerifyAPIKey: Authorize Client Application</DisplayName>
+    <APIKey ref="request.queryparam.client_id"/>
+</VerifyAPIKey>

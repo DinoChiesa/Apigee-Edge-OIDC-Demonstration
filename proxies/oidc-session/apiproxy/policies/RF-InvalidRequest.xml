@@ -1,0 +1,19 @@
+<RaiseFault name='RF-InvalidRequest'>
+  <DisplayName>RF-InvalidRequest</DisplayName>
+  <Description>Invalid Request</Description>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <FaultResponse>
+    <Set>
+      <Payload contentType='application/json'
+               variablePrefix='%' variableSuffix='#'><![CDATA[{
+  "error" : {
+    "code" : 400.14,
+    "message" : "missing query parameter: txid"
+  }
+}
+]]></Payload>
+      <StatusCode>400</StatusCode>
+      <ReasonPhrase>Bad Request</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+</RaiseFault>

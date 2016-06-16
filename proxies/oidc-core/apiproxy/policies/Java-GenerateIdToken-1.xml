@@ -1,0 +1,26 @@
+<JavaCallout name='Java-GenerateIdToken-1'>
+  <DisplayName>Java-GenerateIdToken-1</DisplayName>
+  <Properties>
+    <Property name="algorithm">HS256</Property>
+    <Property name='secret-key'>{secret}</Property>
+
+  <!--
+    <Property name="algorithm">RS256</Property>
+    <Property name='private-key'>{oidc_privateKey}</Property>
+    <Property name='private-key-password'>{oidc_privateKey_password}</Property>
+  -->
+
+    <!-- standard claims -->
+    <Property name="subject">{sub}</Property>
+    <Property name="issuer">{request.header.x-forwarded-proto}://{request.header.host}</Property>
+    <Property name="audience">{aud}</Property>
+    <Property name="expiresIn">{jwt_expires_in}</Property> <!-- in seconds -->
+
+    <!-- custom claims -->
+    <Property name="claim_nonce">{nonce}</Property>
+
+  </Properties>
+
+  <ClassName>com.apigee.callout.jwtsigned.JwtCreatorCallout</ClassName>
+  <ResourceURL>java://jwt-signed-edge-callout.jar</ResourceURL>
+</JavaCallout>

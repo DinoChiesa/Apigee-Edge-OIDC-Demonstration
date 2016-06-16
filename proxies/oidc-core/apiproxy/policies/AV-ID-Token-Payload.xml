@@ -1,0 +1,25 @@
+<AssignMessage name="AV-ID-Token-Payload">
+  <DisplayName>Assign: ID Token Payload: authorization_code flow</DisplayName>
+  <AssignVariable>
+    <Name>aud</Name>
+    <Ref>apigee.client_id</Ref>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>iat</Name>
+    <Ref>issued_at</Ref>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>exp</Name>
+    <Ref>expires_in</Ref>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>secret</Name>
+    <Ref>oauthv2client.Get-Application-Attributes.client_secret</Ref>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>grant_type</Name>
+    <Ref>request.formparam.grant_type</Ref>
+  </AssignVariable>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

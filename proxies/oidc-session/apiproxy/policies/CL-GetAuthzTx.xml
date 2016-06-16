@@ -1,0 +1,10 @@
+<LookupCache name='CL-GetAuthzTx'>
+  <DisplayName>Cache Lookup: Authorization Session</DisplayName>
+  <CacheResource>cache1</CacheResource>
+  <Scope>Global</Scope>
+  <AssignTo>authtx</AssignTo>
+  <CacheKey>
+    <Prefix>authz-sess</Prefix>
+    <KeyFragment ref='request.queryparam.txid' />
+  </CacheKey>
+</LookupCache>

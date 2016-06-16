@@ -1,0 +1,73 @@
+<ProxyEndpoint name='default'>
+  <Description>Default Proxy</Description>
+  <HTTPProxyConnection>
+    <BasePath>/E1A50130-A38A-4D0C-A365-3A6CCFF80523/session</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules>
+    <FaultRule name='unhandled-fault'>
+      <!-- This FaultRule always catches all uncaught faults. -->
+      <Step>
+        <Name>JS-MaybeFormatFault</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+  <!--
+  <FaultRule name='ruleName'>
+    <Step>
+      <Name>{policy_name}</Name>
+    </Step>
+    <Condition>{(conditional statement)}</Condition>
+  </FaultRule>
+  -->
+
+  <PreFlow name='PreFlow'>
+      <Request/>
+      <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='Authorization session info'>
+      <Description>Retrieve info regarding an existing authorization session</Description>
+      <Request>
+        <Step>
+          <Name>RF-InvalidRequest</Name>
+          <Condition>request.queryparam.txid = null</Condition>
+        </Step>
+        <Step><Name>VerifyAPIKey-1</Name></Step>
+        <Step><Name>CL-GetAuthzTx</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Response</Name>
+          <Condition>authtx != null</Condition>
+        </Step>
+        <Step>
+          <Name>AM-NoResponse</Name>
+          <Condition>authtx = null</Condition>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/info") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <!-- keep this if no target (eg, for oauth token generation and refresh) -->
+  <RouteRule name='NoRouteRule'/>
+
+</ProxyEndpoint>

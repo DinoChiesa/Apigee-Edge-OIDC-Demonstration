@@ -1,0 +1,21 @@
+<OAuthV2 name="OAuthV2-GenerateAuthorizationCode">
+  <DisplayName>OAuthV2: Generate Authorization Code</DisplayName>
+  <ExternalAuthorization>false</ExternalAuthorization>
+  <Operation>GenerateAuthorizationCode</Operation>
+  <Scope>req_scope</Scope>
+  <ClientId>client_id</ClientId>
+  <ResponseType>code</ResponseType>
+  <ExpiresIn>600000</ExpiresIn>
+  <SupportedGrantTypes/>
+  <Attributes>
+    <!-- use data extracted from session -->
+    <Attribute name="sessionid" ref="sessionid" display="true"/>
+    <Attribute name="scope" ref="req_scope" display="true"/>
+    <Attribute name="sub" ref="sub" display="true"/>
+<!--
+    <Attribute name="baas_access_token" ref="baas_access_token" display="true"/>
+-->
+  </Attributes>
+  <UserName>sub</UserName>
+  <Tokens/>
+</OAuthV2>

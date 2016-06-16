@@ -1,0 +1,11 @@
+<ExtractVariables name='Extract-LoginUrl-and-ProductName'>
+  <Source>AccessEntity.AE-APIProduct-1</Source>
+  <XMLPayload>
+    <Variable name='oidc_loginUrl' type='string'>
+      <XPath>/ApiProduct/Attributes/Attribute[Name='login-url']/Value/text()</XPath>
+    </Variable>
+    <Variable name='oidc_apiProductName' type='string'>
+      <XPath>string(/ApiProduct/@name)</XPath>
+    </Variable>
+  </XMLPayload>
+</ExtractVariables>

@@ -1,0 +1,5 @@
+<AccessEntity name="AE-APIProduct-1">
+    <DisplayName>AE-APIProduct-1</DisplayName>
+    <EntityIdentifier ref="apiproduct.name"/>
+    <EntityType value="apiproduct"/>
+</AccessEntity>

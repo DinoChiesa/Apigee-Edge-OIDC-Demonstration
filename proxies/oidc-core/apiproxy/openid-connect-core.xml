@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="4" name="openid-connect-core">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1441818436910</CreatedAt>
+    <CreatedBy>noreply_admin@apigee.com</CreatedBy>
+    <Description>OpenID Connect</Description>
+    <DisplayName>openid-connect-core</DisplayName>
+    <LastModifiedAt>1466049788393</LastModifiedAt>
+    <LastModifiedBy>noreply_admin@apigee.com</LastModifiedBy>
+    <Policies>
+        <Policy>AV-ID-Token-Payload-authorization_code-flow</Policy>
+        <Policy>AV-JWT-Vars</Policy>
+        <Policy>AM-Redirect-Relying-Party</Policy>
+        <Policy>AV-InvalidNonce</Policy>
+        <Policy>AM-Token-Response</Policy>
+        <Policy>VerifyAPIKey-1</Policy>
+        <Policy>RF-Cors-Preflight</Policy>
+        <Policy>AM-AuthorizationSession</Policy>
+        <Policy>RF-UnknownRequest</Policy>
+        <Policy>RF-InvalidSession</Policy>
+        <Policy>JS-ConstructResponse</Policy>
+        <Policy>JS-ExportSessionToContextVars</Policy>
+        <Policy>Extract-Token-Response</Policy>
+        <Policy>OAuthV2-GenerateAuthorizationCode</Policy>
+        <Policy>JS-GenerateIdToken</Policy>
+        <Policy>AE-APIProduct</Policy>
+        <Policy>Get-Application-Attributes</Policy>
+        <Policy>CL-AuthorizationSession</Policy>
+        <Policy>Invalid-Authorization-Request</Policy>
+        <Policy>CL-Nonce</Policy>
+        <Policy>CP-Nonce</Policy>
+        <Policy>Redirect-Login-Application</Policy>
+        <Policy>OAuthV2-GenerateAccessToken-AuthCode-AuthCode-Implicit</Policy>
+        <Policy>OAuthV2-GenerateAccessToken-AuthCode</Policy>
+        <Policy>CP-AuthorizationSession</Policy>
+        <Policy>JS-ValidateScopes</Policy>
+        <Policy>JS-ValidateRequest</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://construct.response-1.0.js</Resource>
+        <Resource>jsc://extract.application.session.data-1.0.js</Resource>
+        <Resource>jsc://generate.jws-1.0.js</Resource>
+        <Resource>jsc://jsrsasign-4.8.0-all-min.js</Resource>
+        <Resource>jsc://jws.initialization-1.0.js</Resource>
+    </Resources>
+    <TargetServers/>
+    <TargetEndpoints/>
+    <validate>false</validate>
+</APIProxy>

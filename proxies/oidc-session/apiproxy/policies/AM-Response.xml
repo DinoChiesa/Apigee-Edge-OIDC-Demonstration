@@ -1,0 +1,11 @@
+<AssignMessage name='AM-Response'>
+  <DisplayName>AM-Response</DisplayName>
+  <Description>Authorization Tx information</Description>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <Set>
+    <Payload contentType='application/json'
+             variablePrefix='%' variableSuffix='#'>%authtx#</Payload>
+    <StatusCode>200</StatusCode>
+    <ReasonPhrase>OK</ReasonPhrase>
+  </Set>
+</AssignMessage>

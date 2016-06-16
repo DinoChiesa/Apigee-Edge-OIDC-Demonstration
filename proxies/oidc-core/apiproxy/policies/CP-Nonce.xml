@@ -1,0 +1,15 @@
+<PopulateCache name="CP-Nonce">
+  <DisplayName>Populate Cache: Nonce Information</DisplayName>
+  <Properties/>
+  <CacheResource>cache1</CacheResource>
+  <Source>oidc_nonce</Source>
+  <Scope>Global</Scope>
+  <CacheKey>
+    <Prefix>nonce</Prefix>
+    <KeyFragment ref="client_id"/>
+    <KeyFragment ref="oidc_nonce"/>
+  </CacheKey>
+  <ExpirySettings>
+    <TimeoutInSec>2000</TimeoutInSec>
+  </ExpirySettings>
+</PopulateCache>
