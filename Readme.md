@@ -36,13 +36,12 @@ In the session section, specify the API key from the prior step.
 
 8. in Edge, create an API Product called "OIDC-Core-Product" and
   - add the oidc-core proxy to it
-  - set the callback URL to ... for example http://dinochiesa.github.io/openid-connect/callback-handler.html
-
   - add a "custom attribute" to the API Product called 'login-url' containing the URL from the prior step.
     eg, https://myappname.herokuapp.com/login
 
 9.  create a Developer App in Edge with authorization to the OIDC-Core-Product API Product.
-  - To this App, add a custom attribute, called "logo-url"
+  - set the callback URL to ... for example http://dinochiesa.github.io/openid-connect/callback-handler.html
+  - add a custom attribute, called "logo-url"
     with value of an url for an image, eg, https://www.marketingtechblog.com/wp-content/uploads/2010/06/example-logo-660x330.png  
     This will be displayed in the login-and-consent screen at runtime. 
 
