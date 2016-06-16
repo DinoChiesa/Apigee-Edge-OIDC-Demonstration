@@ -8,7 +8,8 @@ This is a web application, implemented in nodejs. It is used for demonstration p
 
 First, the client app must embed within itself a URL that points to Edge, of a well-known form, which is used to kick off a request-for-token according to OpenID Connect. This looks like:
 
-```https://server/basepath/authorize?
+```
+https://server/basepath/authorize?
 client_id=CLIENTID&
 redirect_uri=http://REDIRECT_URI_FOR_THE_CLIENT_ID&
 response_type=RESPONSE_TYPE&
