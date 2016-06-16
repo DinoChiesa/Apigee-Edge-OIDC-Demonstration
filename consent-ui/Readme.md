@@ -46,7 +46,7 @@ Check the [config](webapp/config) directory for the [config.json](webapp/config/
 As regards the latter, there are 3 possible user Authentication mechanisms: fake, local, usergrid.
 
 Specify which one you want in the "authSystem" property. 
-if you use usergrid, then also specify a "usergrid" property that provides the org, app, and client_id and client_secret for that org+app.  You can also optionally specify the usergrid base URI, to allow hitting commercial BaaS endpoints. By default it will use https://api.usergrid.com . 
+if you use usergrid, then also specify a "usergrid" property that provides the org, app, and client_id and client_secret for that org+app.  You can also optionally specify the usergrid base URI, via the uri property, to allow the use of BaaS endpoints. If you do not specify a uri property, the system will use https://api.usergrid.com . 
 
 Example:
 
@@ -60,6 +60,7 @@ Example:
   "usergrid" : {
     "org": "somebody",
     "app" : "sandbox",
+    "uri": "https://myspecial-apibaas-prod.apigee.net/appservices",
     "id" : "BAADBEEF",
     "secret" : "YXSeeeeCREToHQSbA"
   },
@@ -100,7 +101,7 @@ There is a [tools](tools) subdirectory that contains 2 command-line tools helpfu
 
 *  `authenticateUser.js` - allows you to test user credentials.  Helpful in ensuring your BaaS connection is correct, or that you've configured the localUserDb.js thing correctly.  It work with all three pluggable authentication subsystems.
 
-* setUserPasswordInUsergrid.js - allows you to set a user password in Usergrid. The user must exist. 
+* `setUserPasswordInUsergrid.js` - allows you to set a user password in Usergrid. The user must exist. 
 
 
 
