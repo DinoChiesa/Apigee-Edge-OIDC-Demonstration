@@ -1,0 +1,30 @@
+title OpenId Connect GET + IdM flow
+participant 3rd party app\n(Browser/Mobile app) as APP
+participant Apigee Edge\nOpenID Connect APIs as APIXOIC
+participant Consent\nWebsite as VIDWEB
+participant Apigee Edge\nSession API\nAPIs as APIXSESS
+APP->APIXOIC: GET /authorize?\nresponse_type=code%20id_token\n    &scope=openid%20profile%20email\n&client_id=<CLIENT_ID>\n&state=...\n&redirect_uri=...\n&...
+activate APP
+activate APIXOIC
+APIXOIC->APIXOIC: validate request
+opt invalid request
+   APIXOIC-->APP: return error
+end
+APIXOIC->APIXOIC: generate <AUTHORIZE_TX_ID> with\nauthorize request details
+APIXOIC-->APP: HTTP 302\nLocation:\nhttps://<CONSENT_ENDPOINT>/login?ref=<AUTHORIZE_TX_ID>
+deactivate APIXOIC
+APP->VIDWEB: GET https://<CONSENT_ENDPOINT>/login?ref=<AUTHORIZE_TX_ID>
+activate VIDWEB
+VIDWEB->APIXSESS: GET /info/<AUTHORIZE_TX_ID>
+activate APIXSESS
+APIXSESS-->VIDWEB: + client details:\n- scope\n- required fields\n+ login_hint (decrypted)\n+ id_token_hint (decrypted)
+deactivate APIXSESS
+note over APP, APIXSESS: The Consent Website handles authentication (maybe also registration) and consent management.\nThe logic is not described here as it is site-dependent. Also, not relevant for the high level integration between Apigee Edge and customer IdM systems.\nThe expected interaction is for this webapp to connect to a directory server via LDAP.  Or potentially support SAML, etc.
+VIDWEB->APIXOIC: POST /oidc/oauth2/auth/<AUTHORIZE_TX_ID>\n+ user and profile details
+activate APIXOIC
+APIXOIC->APIXOIC: generate codes and tokens
+APIXOIC-->VIDWEB: <returnURI> including code, tokens\nand other requested param
+deactivate APIXOIC
+VIDWEB-->APP: HTTP 302 Redirect\nLocation:\n<returnURI>\n(includes auth_code and optionally id_token)
+deactivate VIDWEB
+note over APP,APIXSESS: The Application has received the id_token (and/or authorization token, and/or token) from the OpenID Connect Provider (Apigee Edge). This confirms the authorization given by the user.\nThe Application can then use the codes or tokens in any subsequent appropriate API calls. 
