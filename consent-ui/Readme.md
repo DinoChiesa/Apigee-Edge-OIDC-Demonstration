@@ -93,7 +93,34 @@ The third option for "authSystem", "fake", always returns success in response to
 Only one of {usergrid, local, fake} can be used.  To change, you must modify the config.json file and restart the login-and-consent server. You can include the "usergrid" and "localUserDb" properties in the config at the same time - the irrelevant one will be ignored. It is the "authSystem" property that tells the login-and-consent app which one to use. 
 
 
-## Requests handled Here
+## Tools
+
+There is a [tools](tools) subdirectory that contains 2 command-line tools helpful when fiddling around with user authentication.
+
+*  `authenticateUser.js` - allows you to test user credentials.  Helpful in ensuring your BaaS connection is correct, or that you've configured the localUserDb.js thing correctly.  It work with all three pluggable authentication subsystems.
+
+* setUserPasswordInUsergrid.js - allows you to set a user password in Usergrid. The user must exist. 
+
+
+
+
+## What's with the Procfile?
+
+That [Procfile](webapp/Procfile) file is used for Heroku. You don't need it if you are not hosting this webapp on Heroku. 
+
+
+
+## Extending
+
+A possibly interesting axis for extension is adding authentication services. 
+One could imagine including an LDAP user authentication function.
+See the [userAuthentication.js](webapp/lib/userAuthentication.js) file for details. 
+
+Another avenue for extension is to use cookies to retain login status or etc. And Maybe extend to use BaaS or some other store to retain the consent decision. In a real app, the consent would need to be revokable, as well. 
+
+
+
+## Appendix: Requests handled Here
 
 You ought to be able to use this webapp as-is, with just the configuration described above. 
 In most circumstances, there ought be no reason to have to dig into the code.  Even so, for clarity and completeness, I've written up a quick description of the inbound requests handled by this web app.  For all inbound requests not described below here, this webapp issues a 404. 
@@ -158,15 +185,6 @@ The form contents include:
 
 
 If the user has granted consent, then the login-and-consent app posts to the auth endpoint (on Edge) to get the redirect URL for this OpenID Connect session. The login-and-consent app then responds to the user-agent with a 302, using that redirect URL as the Location header.
-
-
-
-## Extending
-
-A possibly interesting axis for extension is adding authentication services. 
-One could imagine including an LDAP user authentication function.
-See the [userAuthentication.js](webapp/lib/userAuthentication.js) file for details. 
-
 
 
 ## Further Notes
