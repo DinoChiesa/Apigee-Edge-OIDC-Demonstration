@@ -59,7 +59,7 @@ Fill out all the fields, with the data from your configuration . It uses localSt
 When you fill out the form, the hyperlink at the bottom is dynamically updated. I suggest you alt-click the link when you're ready, so the login page appears in a new browser window.
 
 
-If you have an authorization_code flow (response_type=code), after you login and consent, you will get a code.  Copy the code, then return to the link-builder page.  Paste the code into the form at the bottom.  The very bottom of the page will show a curl command that will redeem the code for an oauth token. Click the "copy" button and run that curl command from the terminal to retrieve the token.
+If you have an authorization_code flow (response_type=code), after you login and consent, you will get a code.  Copy the code, then return to the link-builder page. Paste the code into the form at the bottom.  The very bottom of the page will show a curl command that will redeem the code for an oauth token. Click the "copy" button and run that curl command from the terminal to retrieve the token.
 
 
 ## ID Tokens
@@ -73,6 +73,7 @@ JWT can be:
 
 This demonstration issues JWT that are signed with a secret key. The key used is the client_secret from the developer app in Apigee Edge  - this is a secret shared  between the app and the JWT issuer (Edge). 
 
+You could modify the API Proxy to generate JWT signed with a private key. To do that you'd need to introduce key management or a public/private keypair into the system. Not a huge effort, but this demo does not do it..
 
 
 ## Other Info
