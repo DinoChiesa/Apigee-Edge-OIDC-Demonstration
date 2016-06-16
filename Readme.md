@@ -30,7 +30,7 @@ Ten Easy? Steps.
 5. Modify the config for the login-and-consent app to specify the endpoints for Auth and Session.
 In the session section, specify the API key from the prior step.
 
-6. Also modify the config for the login-and-consent app to specify which authentication service to use. 'local' is easiest.  'usergrid' is fine, but you need to set up accounts in a usergrid org+app. (See the readme for the webapp.)
+6. Also modify the config for the login-and-consent app to specify which authentication service to use. 'local' is easiest.  'usergrid' is fine, but you need to set up accounts in a usergrid org+app. (See the [Readme for the consent webapp](consent-ui/Readme.md).)
 
 7. deploy the login-and-consent webapp to a location that is reachable from the internet, like Heroku.
 
@@ -73,6 +73,7 @@ JWT can be:
 * signed with a secret key, via HMAC-256.  These can be verified with the secret key. 
 
 This demonstration issues JWT that are signed with a secret key. The key used is the client_secret from the developer app in Apigee Edge  - this is a secret shared  between the app and the JWT issuer (Edge). 
+
 
 
 ## Other Info
