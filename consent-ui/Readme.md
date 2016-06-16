@@ -10,11 +10,11 @@ This is a login-and-consent app that participates in the OpenID Connect flow.
 GET /login?sessionid=rrt328ea-9654-2669911-1&scope=openid%20profile 
 ```
 
-The sessionid is set by the OAuth token dispensary (in this case Apigee Edge).  It really is a pointed to a cache entry containing the originating (and previously validated) client_id, and scope, etc. 
+The sessionid is set by the OAuth token dispensary (in this case Apigee Edge).  It really is a pointer to a cache entry held in Edge containing the originating (and previously validated) client_id, and scope, etc. 
 
-The logic for the login page first inquires with Edge about the session id at a well-known endpoint : /info. If that is valid, then the page renders a login form to the user. One could imagine setting a cookie in the user browser on a "remember me?" checkbox, but I didn't implement that in this sample.
+The logic for the login page first inquires with Edge about the session id at a well-known endpoint : /info. If that is valid, then the page renders a login form to the user. One could imagine setting a cookie in the user browser containing settings for "remember me" and "keep me logged in" checkboxes, so that the user need not login *every time*, and if he is logging in, then he gets prompted with his username.  But I didn't implement that in this sample.  (PRs accepted!)
 
-The login form is simplistic - just asks for a username and password.  It's unskinned.
+The login form is simplistic - just asks for a username and password. It's currently unskinned.  You could skin it pretty easily. 
 
 
 ### Login Form Postback
@@ -23,7 +23,9 @@ The login form is simplistic - just asks for a username and password.  It's unsk
 POST /validateLoginAndConsent
 ```
 
-This is the postback from the login form. If credentials have been provided, then the app validates the user credentials. If the login succeeds, then the app renders a second page, the consent form, which requests consent from the user to release information to the app (identified by the client_id). This also ought to be stored somewhere (BaaS), but for illustration purposes, the app asks for consent each time it requests authentication. 
+This is the postback from the login form. If credentials have been provided, then the app validates the user credentials against some user authentication service. This service is pluggable (more on that later in the "Configuring" section).  If the user is valid, then the app renders a second page, the consent form, which requests consent from the authenticated user to allow release of some information to the app, which is identified by the client_id. The consent form tries to show a logo for the app, a logo which is associated to the client_id. 
+
+This consent decision also ought to be stored somewhere (for example, BaaS), but for illustration purposes, the app asks for consent each time it requests authentication. 
 
 The form payload for this form includes:
 
