@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Authenticate</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ 
+    <link rel='stylesheet' type='text/css' media='screen' href='css/login-base.css'>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='js/loginpage.js'>
+    </script>
+  </head>
+
+  <!-- ======================================================= -->
+
+  <body>
+    <!--
+    you can substitue the span of reauth email for a input with the email and
+    include the remember me checkbox
+    -->
+    <div class="container">
+      <div class="card card-container">
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+
+        <form class="form-signin" action='/validateLoginAndConsent' method='POST'>
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="email" id="inputEmail" name='username' class="form-control" placeholder="Email address" required autofocus>
+          <input type="password" id="inputPassword" name='password' class="form-control" placeholder="Password" required>
+          <div id="remember" class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+
+          <div class="control-group">
+            <input type="hidden" id='sessionid' name='sessionid' value="<%= txid %>" />
+            <input type="hidden" id='client_id' name='client_id' value="<%= client_id %>" />
+            <input type="hidden" id='response_type' name='response_type' value="<%= response_type %>" />
+            <input type="hidden" id='requestedScopes' name='requestedScopes' value="<%= req_scope %>" />
+            <input type="hidden" id='redirect_uri' name='redirect_uri' value="<%= redirect_uri %>" />
+            <input type="hidden" id='clientState' name='clientState' value="<%= req_state %>" />
+            <input type="hidden" id='appName' name='appName' value="<%= appName %>" />
+            <input type="hidden" id='appLogoUrl' name='appLogoUrl' value="<%= appLogoUrl %>" />
+            <input type="hidden" id='display' name='display' value="<%= display %>" />
+            <input type="hidden" id='login_hint' name='login_hint' value="<%= login_hint %>" />
+          </div>
+
+          <% if (errorMessage) { %>
+          <div class="alert alert-error">
+            <strong><%= errorMessage %></strong>
+          </div>
+          <% } %>
+
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"
+                  name='submit' value='yes'><%= action %></button>
+
+          <button class="btn btn-lg btn-primary btn-block btn-cancel" type="submit"
+                  name='submit' value='no'>Cancel</button>
+          <!-- 
+          <a href="/cancel" title='cancel'>
+            <button class="btn btn-lg btn-block btn-cancel" 
+                    name='submit' type='button' value='no'><span>Cancel</span></button>
+          </a>
+          -->
+        </form>
+        <!-- 
+        <a href="#" class="forgot-password">Forgot the password?</a>
+        -->
+      </div>
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,81 @@
+fieldset { margin: 0 0 5px 0; }
+
+fieldset > label {
+  float: left;
+  width: 116px;  
+  text-align: right; 
+}
+
+fieldset  > div > div.data,
+fieldset  > div > input[type=text],
+fieldset  > div > input[type=password] {
+  /* width: 164px;  */
+  margin: 4px 0 0 10px; 
+}
+
+fieldset > div > div.data { display:inline-block;}
+
+.login-box {
+  max-width:480px;
+  border: 1px dotted Grey;
+}
+
+table {
+  border: 1px black solid;
+}
+
+table  tr {
+  border: 1px grey dotted;
+}
+table  tr > td {
+  border: 1px grey dotted;
+  padding: 3px 5px;
+  margin: 2px 6px;
+}
+
+body {
+  position:absolute;
+  margin: 2px 10px;
+}
+
+/* maybe not using this */
+.logo-floater {
+  float:left;
+  position:relative;
+  top:40px;
+  margin-left:10px;
+  margin-bottom:32px;
+  max-width:220px;
+}
+
+div.data > img {
+  max-width:96px;
+}
+.control-label {
+  min-width:84px;
+}
+
+div.controls {
+  margin-top: 12px;
+}
+
+div.control-group > div.controls > button.btn {
+  float:right;
+  margin-left:4px;
+}
+
+.btn-nothanks {
+  color: Black;
+  background-color: #CFCCCD;
+  border-color: #ABA9AA;
+}
+
+.btn-revoke {
+  color: Black;
+  background-color: #FF6973;
+  border-color: #ABA9AA;
+}
+
+.popover {
+  max-width: 344px; /* override */
+}

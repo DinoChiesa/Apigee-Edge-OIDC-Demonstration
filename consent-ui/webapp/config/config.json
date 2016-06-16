@@ -1,0 +1,15 @@
+{
+  "authEndpoint" : "https://cheeso-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/oauth2/auth",
+  "sessionApi" : {
+    "endpoint" : "https://cheeso-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/session",
+    "apikey" : "rkEsJHrFqFt94DGoJcbgFb4LXvJZvzvq"
+  },
+  "usergrid" : {
+    "org": "dino",
+    "app" : "sandbox",
+    "id" : "YXA6EJb5pOc4EeGW9hIxOwbREg",
+    "secret" : "YXA6P5mwHt1quK63vN6uQ-F7voHQSbA"
+  },
+  "localUserDb" : "../config/localUserDb.js",
+  "authSystem" : "local"
+}

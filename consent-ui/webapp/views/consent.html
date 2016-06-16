@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Consent</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ 
+    <link rel='stylesheet' type='text/css' media='screen' href='css/login-base.css'>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='js/loginpage.js'>
+    </script>
+  </head>
+
+  <!-- ======================================================= -->
+
+  <body>
+    <!--
+    you can substitue the span of reauth email for a input with the email and
+    include the remember me checkbox
+    -->
+    <div class="container">
+      <div class="card card-container">
+        <img id="profile-img" alt='app logo' class="profile-img-card" src="<%= appLogoUrl %>" />
+        <p id="profile-name" class="profile-name-card"><%= appName %> is asking for your approval.</p>
+
+        <form class="form-signin" action='/grantConsent' method='POST'>
+
+          <div class="control-group" style='margin-bottom: 20px;'>
+            <label class='control-label' for='scopes'>Requested scopes:</label>
+             <% 
+             var rScopeList = req_scope.trim().split(' ');
+             rScopeList.forEach(function(s){ %>
+              <div class='data'><input name='check_<%= s %>' type='checkbox' disabled='disabled' checked> <%= s %></div>
+             <% });
+           %>
+          </div>
+
+          <div class="control-group">
+            <input type="hidden" id='sessionid' name='sessionid' value="<%= txid %>" />
+            <input type="hidden" id='client_id' name='client_id' value="<%= client_id %>" />
+            <input type="hidden" id='response_type' name='response_type' value="<%= response_type %>" />
+            <input type="hidden" id='requestedScopes' name='requestedScopes' value="<%= req_scope %>" />
+            <input type="hidden" id='redirect_uri' name='redirect_uri' value="<%= redirect_uri %>" />
+            <input type="hidden" id='clientState' name='clientState' value="<%= req_state %>" />
+            <input type="hidden" id='appName' name='appName' value="<%= appName %>" />
+            <input type="hidden" id='userProfile' name='userProfile' value="<%= userProfile %>" />
+          </div>
+
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit"
+                  name='submit' value='yes'><%= action %></button>
+
+          <button class="btn btn-lg btn-primary btn-block btn-cancel" type="submit"
+                  name='submit' value='no'>Decline</button>
+
+          <!-- 
+          <a href="/cancel" title='cancel'>
+            <button class="btn btn-lg btn-block btn-cancel" 
+                    name='submit' type='button' value='no'><span>Decline</span></button>
+          </a>
+          -->
+        </form>
+        <!-- 
+        <a href="#" class="forgot-password">Forgot the password?</a>
+        -->
+      </div>
+    </div>
+
+  </body>
+
+</html>

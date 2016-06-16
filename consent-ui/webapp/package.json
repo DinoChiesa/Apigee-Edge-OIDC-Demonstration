@@ -1,0 +1,16 @@
+{
+  "name": "oidcConsent1-server-node",
+  "version": "0.1.0",
+  "dependencies": {
+    "express": "~4.13.4",
+    "body-parser": "~1.15.0",
+    "querystring" : "~0.2.0",
+    "morgan" : "~1.7.0",
+    "request" : "~2.69.0",
+    "q": "~1.4.1",
+    "ejs": "~2.4.1"
+  },
+  "engines": {
+    "node": "4.1.1"
+  }
+}
