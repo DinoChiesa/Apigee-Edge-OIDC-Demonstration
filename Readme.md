@@ -43,7 +43,7 @@ In the session section, specify the API key from the prior step.
   - set the callback URL to ... for example http://dinochiesa.github.io/openid-connect/callback-handler.html
   - add a custom attribute, called "logo-url"
     with value of an url for an image, eg, https://www.marketingtechblog.com/wp-content/uploads/2010/06/example-logo-660x330.png  
-    This will be displayed in the login-and-consent screen at runtime. 
+    This will be displayed to the user at runtime, by the login-and-consent web app when ascertaining consent. 
 
 
 10. Kick off the login by using http://dinochiesa.github.io/openid-connect/link-builder2.html
@@ -84,6 +84,6 @@ There are 4 proxies in this package.
 * *oidc-userinfo* - Supporting the Userinfo part of OpenID Connect
 * *oidc-session* - Custom stuff, outside the spec of OIDC, supporting the login app.
 
-If you want to demonstrate only token or code issuance (including JWT issuance) via OIDC, then you need only the core and session proxies.
+If you want to demonstrate only token or code issuance (including JWT issuance) via OIDC, then you need only the core and session proxies. This demonstration does not illustrate the userinfo or discovery pieces of OIDC. 
 
 
