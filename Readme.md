@@ -63,7 +63,16 @@ When you fill out the form, the hyperlink at the bottom is dynamically updated. 
 If you have an authorization_code flow (response_type=code), after you login and consent, you will get a code.  Copy the code, then return to the link-builder page.  Paste the code into the form at the bottom.  The very bottom of the page will show a curl command that will redeem the code for an oauth token. Click the "copy" button and run that curl command from the terminal to retrieve the token.
 
 
+## ID Tokens
 
+JWT are tokens, that are formatted as JSON and then potentially signed. With respect to OpenID Connect, JWT are used to represent identification information about a subject, so they're called "id tokens", aka id_tokens.
+
+JWT can be:
+* unsigned. In which case they ought to be untrusted. 
+* signed with a private key. (RSA-256) These can be verified with the corresponding public key. 
+* signed with a secret key, via HMAC-256.  These can be verified with the secret key. 
+
+This demonstration issues JWT that are signed with a secret key. The key used is the client_secret from the developer app in Apigee Edge  - this is a secret shared  between the app and the JWT issuer (Edge). 
 
 
 ## Other Info
