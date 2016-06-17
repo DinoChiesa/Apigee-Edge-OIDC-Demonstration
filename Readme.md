@@ -11,8 +11,11 @@ In this demonstration, we do not provide the client app. Instead, the client app
 
 This simulates the client app behavior.
 
+## Demo Walkthrough
 
-## Setup
+[![Screenshot of demo walkthrough video](docs/OIDC_Demo_Walkthrough_for_Apigee_SEs.png)](https://youtu.be/hJNGu0RFzzc "OIDC Demo Walkthrough")
+
+## Setup for Yourself
 
 Ten Easy? Steps.
 

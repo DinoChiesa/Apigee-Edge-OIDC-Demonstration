@@ -30,7 +30,6 @@
     <Property name="claim_nonce">{nonce}</Property>
     <Property name='claim_given_name'>{given_name}</Property>
     <Property name='claim_family_name'>{family_name}</Property>
-    <Property name='claim_name'>{name}</Property>
     <Property name='claim_motto'>{motto}</Property>
     <Property name='claim_email'>{email}</Property>
     <Property name='claim_preferred_username'>{preferred_username}</Property>
