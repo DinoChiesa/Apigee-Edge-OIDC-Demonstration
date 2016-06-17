@@ -32,7 +32,13 @@
     <Property name='claim_family_name'>{family_name}</Property>
     <Property name='claim_motto'>{motto}</Property>
     <Property name='claim_email'>{email}</Property>
+    <!--
+        You can inject any claims you like into the JWT ID Token.
+        It probably depends on what information you get back from the
+        authentication service.
+
     <Property name='claim_preferred_username'>{preferred_username}</Property>
+    -->
 
   </Properties>
 
