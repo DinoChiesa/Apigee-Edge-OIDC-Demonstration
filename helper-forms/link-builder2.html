@@ -110,7 +110,8 @@
         
       <div class="form-group">
         <label for="code">code:</label>
-        <input type="text" class="form-control" id="code">
+        <input type="text" title='use this only if the response_type includes "code"'
+               class="form-control" id="code">
       </div>
 
       <div>
@@ -120,10 +121,12 @@
 
     <div id='output'>
       <div><a href='' id='authzlink'></a></div>
-      <div id='redeemCode'></div>
-      <!-- Trigger -->
-      <button class="btn clipboard-btn" data-clipboard-target="#redeemCode"
-              title="Copy to clipboard">Copy</button>
+      <div id='authzRedemption'>
+        <div id='redeemCode'></div>
+        <!-- Trigger -->
+        <button class="btn btn-default clipboard-btn" data-clipboard-target="#redeemCode"
+                title="Copy to clipboard">Copy</button>
+      </div>
     </div>
     </div>
 
