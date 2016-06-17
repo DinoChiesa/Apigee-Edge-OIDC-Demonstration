@@ -2,7 +2,16 @@
   <DisplayName>Java-GenerateIdToken-1</DisplayName>
   <Properties>
     <Property name="algorithm">HS256</Property>
-    <Property name='secret-key'>{secret}</Property>
+    <!--
+
+     NB: The shared-secret must be at least 256-bits in length = 32 ASCII chars
+     . The client_secret in Edge is typically 16 characters.  Therefore, to reach
+     the 32-char limit, we include some fixed text here. NOT RECOMMENDED FOR REAL
+     SYSTEMS.  In a real system we recommend that you use RS256, with Public/Private
+     key signing.
+
+    -->
+    <Property name='secret-key'>At-Apigee-We-Love-APIs{secret}</Property>
 
   <!--
     <Property name="algorithm">RS256</Property>

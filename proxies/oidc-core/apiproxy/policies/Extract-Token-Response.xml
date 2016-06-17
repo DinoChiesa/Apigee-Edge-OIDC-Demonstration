@@ -9,6 +9,9 @@
     <Variable name="application_name">
       <JSONPath>$.application_name</JSONPath>
     </Variable>
+    <Variable name="client_id">
+      <JSONPath>$.client_id</JSONPath>
+    </Variable>
     <Variable name="sub">
       <JSONPath>$.sub</JSONPath>
     </Variable>

@@ -5,7 +5,7 @@
     <CreatedBy>noreply_admin@apigee.com</CreatedBy>
     <Description>OpenID Connect</Description>
     <DisplayName>openid-connect-core</DisplayName>
-    <LastModifiedAt>1466049788393</LastModifiedAt>
+    <LastModifiedAt>1466123977025</LastModifiedAt>
     <LastModifiedBy>noreply_admin@apigee.com</LastModifiedBy>
     <Policies>
         <Policy>AV-ID-Token-Payload-authorization_code-flow</Policy>
