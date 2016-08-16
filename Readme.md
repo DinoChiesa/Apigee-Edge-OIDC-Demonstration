@@ -2,14 +2,21 @@
 
 OpenID Connect adds an Authentication mechanism to OAuth 2.0.
 
-There are 3 parts to this demonstration:
+This repository includes proxies and tools to demonstrate how that would work with Apigee Edge.
+
+There are 3 pieces you need to run this demonstration:
 * The Edge proxies - there are 2: oidc-core and oidc-session
 * The login-and-consent application, which is a web app
+* a web browser
 
 
-In this demonstration, we do not provide the client app. Instead, the client app is something you imagine. Use the browser to GET the URL to kick off the OIDC flow. 
+In this demonstration, we do not provide the client app. Just for this demo, the client app is something you imagine.
 
-This simulates the client app behavior.
+In a real use of OpenID Connect, there would be an actual client app, and the client would send the GET request to kick off the OIDC authentication and consent. In this demonstration we will use the browser to GET the URL to kick off the OIDC flow. This simulates the client app behavior.
+
+## License
+
+All of the code here is copyright (c) 2016 Apigee Corporation and is licensed under the [Apache 2.0 Source license](LICENSE).
 
 ## Demo Walkthrough
 
