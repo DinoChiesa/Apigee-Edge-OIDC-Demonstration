@@ -41,7 +41,9 @@ After that, the webapp is finished. The browser follows the 302, which gives the
 Check the [config](webapp/config) directory for the [config.json](webapp/config/config.json) file.  This will let you set various things:
 
 * the endpoints for connecting into the Apigee Edge OAuth token dispensary.
-* info for the user authentication system
+* the option for the user authentication system
+
+As regards the former, you should specify the organization name and the environment name, and the basepath. These are dictated by where you've deployed the OIDC proxies: into which organization and environment in Edge, and using which basepath.  
 
 As regards the latter, there are 3 possible user Authentication mechanisms: fake, local, usergrid.
 
@@ -52,17 +54,17 @@ Example:
 
 ```
 {
-  "authEndpoint" : "https://webmd-eval1-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/oauth2/auth",
+  "authEndpoint" : "https://ORGNAME-ENVNAME.apigee.net/BASEPATH/oauth2/auth",
   "sessionApi" : {
-    "endpoint" : "https://webmd-eval1-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/session",
+    "endpoint" : "https://ORGNAME-ENVNAME.apigee.net/BASEPATH/session",
     "apikey" : "i8OY9r3ikjwdksjdkdjRVzB5yvvNJ6h6OhwI"
   },
   "usergrid" : {
-    "org": "somebody",
-    "app" : "sandbox",
+    "org": "baas_or_usergrid_org_name_here",
+    "app" : "baas_app_name_here",
     "uri": "https://myspecial-apibaas-prod.apigee.net/appservices",
-    "id" : "BAADBEEF",
-    "secret" : "YXSeeeeCREToHQSbA"
+    "id" : "CLIENT_ID_FOR_BAAS_APP",
+    "secret" : "CLIENT_SECRET_FOR_BAAS_APP"
   },
   "authSystem" : "usergrid"
 }
@@ -75,9 +77,9 @@ Example:
 
 ```
 {
-  "authEndpoint" : "https://webmd-eval1-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/oauth2/auth",
+  "authEndpoint" : "https://ORGNAME-ENVNAME.apigee.net/BASEPATH/oauth2/auth",
   "sessionApi" : {
-    "endpoint" : "https://webmd-eval1-test.apigee.net/E1A50130-A38A-4D0C-A365-3A6CCFF80523/session",
+    "endpoint" : "https://ORGNAME-ENVNAME.apigee.net/BASEPATH/session",
     "apikey" : "i8OY9r3ikjwdksjdkdjRVzB5yvvNJ6h6OhwI"
   },
   "localUserDb" : "../config/localUserDb.js",

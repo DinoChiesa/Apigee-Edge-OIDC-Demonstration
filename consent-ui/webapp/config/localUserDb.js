@@ -13,15 +13,15 @@
 // I just wanted to show what could be possible.
 //
 // created: Fri Mar 25 20:01:12 2016
-// last saved: <2016-June-15 18:54:15>
+// last saved: <2016-August-16 09:44:24>
 
 var userDb = {
-      "geir@apigee.com" : { // IloveAPIs
+      "dino@apigee.com" : { // IloveAPIs
         hash: 'd6da5bb778f9694448755d200b2cb792c39a1b951d3ffcf5d429e74cfc5eb2b3',
         uuid: 'EA1BA8EB-0A83-46BE-8B05-4C2E827F25B3',
-        motto: 'Wherever you go, there you are.',
-        given_name: "Geir",
-        family_name: "Sjurseth",
+        motto: 'If this isn\'t nice, I don\'t know what is.',
+        given_name: "Dino",
+        family_name: "Chiesa",
         roles: ['read', 'edit', 'delete']
       },
       "carlos@apigee.com" : { // Wizard123
@@ -29,7 +29,7 @@ var userDb = {
         uuid: '0B1A8BFF-5000-4868-817E-3C157510C1D9',
         given_name: "Carlos",
         family_name: "Eberhardt",
-        motto: 'There\'s no problem that Regular Expressions cannot worsen',
+        motto: 'There\'s no problem that Regular Expressions cannot exacerbate.',
         roles: ['read']
       },
       "vidya@apigee.com": { // 1Performance

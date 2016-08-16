@@ -30,7 +30,7 @@ Ten Easy? Steps.
 
 4. in Edge, create a Developer App called "OIDC-Session-App" and give it access to the OIDC-Session API Product.  Get the API Key. 
 
-5. Modify the config for the login-and-consent app to specify the endpoints for Auth and Session.
+5. Modify the config for the login-and-consent app to specify the endpoints for Auth and Session. Specify the organization name, the environment name, and the basepath for the oidc-core and session.
 In the session section, specify the API key from the prior step.
 
 6. Also modify the config for the login-and-consent app to specify which authentication service to use. 'local' is easiest.  'usergrid' is fine, but you need to set up accounts in a usergrid org+app. (See the [Readme for the consent webapp](consent-ui/Readme.md).)
@@ -43,13 +43,13 @@ In the session section, specify the API key from the prior step.
     eg, https://myappname.herokuapp.com/login
 
 9.  create a Developer App in Edge with authorization to the OIDC-Core-Product API Product.
-  - set the callback URL to ... for example http://dinochiesa.github.io/openid-connect/callback-handler.html
+  - set the callback URL to ... for example http://dinochiesa.github.io/openid-connect/callback-handler.html, or whatever handler you'd like to use. 
   - add a custom attribute, called "logo-url"
     with value of an url for an image, eg, https://www.marketingtechblog.com/wp-content/uploads/2010/06/example-logo-660x330.png  
     This will be displayed to the user at runtime, by the login-and-consent web app when ascertaining consent. 
 
 
-10. Kick off the login by using http://dinochiesa.github.io/openid-connect/link-builder2.html
+10. Kick off the login by using http://dinochiesa.github.io/openid-connect/link-builder2.html or build your URL manually. 
 ... specifying  your org, env, chosen basepath (See step 1), client id from the final step, any nonce and state, the callback url from above, and etc.
 
 
