@@ -4,7 +4,7 @@
 // page logic for link-builder.html and link-builder2.html
 //
 // created: Thu Oct  1 13:37:31 2015
-// last saved: <2016-June-16 16:55:29>
+// last saved: <2017-July-13 17:03:49>
 
 
 var model = model || {
@@ -44,7 +44,7 @@ function updateLink() {
   $('#authzlink').text(link);
   $('#authzlink').attr('href', link);
 
-  if (model.code){
+  if (model.code) {
     var re1 = new RegExp('/authorize.+');
     var newUrl = link.replace(re1, '/token');
     var payload = 'grant_type=authorization_code&code=' + model.code;
@@ -79,6 +79,50 @@ function updateModel(event) {
     model[key] = value;
   });
   updateLink();
+  if (event)
+    event.preventDefault();
+}
+
+function resetRedemption(event) {
+  $('#redeemResult').html('');
+  $('#redeemCode').text('');
+  $('#code').val('');
+  updateModel();
+  if (event)
+    event.preventDefault();
+}
+
+function invokeRedemption(event) {
+  var linkUrl = $('#authzlink').text();
+  var re1 = new RegExp('/authorize.+');
+  var newUrl = linkUrl.replace(re1, '/token');
+  var payload = {
+        grant_type: 'authorization_code',
+        code: model.code
+      };
+
+  // NB: This call will fail if the server does not include CORS headers in the response
+  $.ajax({
+    url : newUrl,
+    type: "POST",
+    headers: { 'Authorization': 'Basic ' + btoa( model.clientid + ':' + model.clientsecret ) },
+    data : payload,
+    success: function(data, textStatus, jqXHR) {
+      //data - response from server
+      $('#redeemResult')
+        .removeClass('error')
+        .html('<pre class="access-token-response">' +
+                              JSON.stringify(data, null, 2) +
+                              '</pre>');
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#redeemResult')
+        .addClass('error')
+        .html('<pre class="access-token-response">' +
+                              JSON.stringify(jqXHR.responseJSON || "error", null, 2) +
+                              '</pre>');
+    }
+  });
 
   if (event)
     event.preventDefault();
@@ -122,10 +166,12 @@ $(document).ready(function() {
     allow_single_deselect: true
   });
 
-
   $( "form input[type='text']" ).change(onInputChanged);
   $( "form select" ).change(onSelectChanged);
   $( "form button" ).submit(updateModel);
+
+  $( "#invokeRedemption" ).click(invokeRedemption);
+  $( "#resetRedemption" ).click(resetRedemption);
 
   populateFormFields();
 

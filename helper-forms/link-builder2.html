@@ -5,21 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" 
-          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+          href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type='text/javascript'
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  
     <script type='text/javascript'
-            src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" type="text/css" 
-          href="http://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
+          href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
 
     <script type='text/javascript' 
-             src='http://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js'>
+             src='//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.js'>
     </script>
     <script type='text/javascript' 
-            src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js">
+            src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js">
     </script>
     
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -123,9 +123,12 @@
       <div><a href='' id='authzlink'></a></div>
       <div id='authzRedemption'>
         <div id='redeemCode'></div>
-        <!-- Trigger -->
         <button class="btn btn-default clipboard-btn" data-clipboard-target="#redeemCode"
-                title="Copy to clipboard">Copy</button>
+                title="Copy the curl command to the clipboard">Copy</button>
+        <button class="btn btn-default" id="invokeRedemption"
+                title="invoke the code redemption from the browser">Redeem</button>
+        <button class="btn btn-default" id="resetRedemption">Reset</button>
+        <div id='redeemResult'></div>
       </div>
     </div>
     </div>

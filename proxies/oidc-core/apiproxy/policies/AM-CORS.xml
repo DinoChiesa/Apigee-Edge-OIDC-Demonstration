@@ -1,0 +1,11 @@
+<AssignMessage name="AM-CORS">
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+  <Set>
+    <Headers>
+      <Header name='Access-Control-Allow-Origin'>*</Header>
+      <Header name='Access-Control-Request-Headers'>Authorization, Content-Type</Header>
+      <Header name='Access-Control-Request-Method'>POST</Header>
+    </Headers>
+  </Set>
+</AssignMessage>

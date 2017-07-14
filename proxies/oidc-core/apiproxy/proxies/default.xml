@@ -66,6 +66,7 @@
       <Response>
         <Step><Name>Extract-Token-Response</Name></Step>
         <Step><Name>Get-Application-Attributes</Name></Step>
+        <Step><Name>AM-CORS</Name></Step>
 
         <!-- do the following three steps only if we want an id_token -->
         <Step>
