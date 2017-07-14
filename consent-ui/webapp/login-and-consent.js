@@ -30,6 +30,7 @@ var express = require('express'),
     q = require('q'), // promises
     request = require('request'),
     path = require('path'),
+    defaultAppLogo = 'http://i.imgur.com/6DidtRS.png',
     url = require('url'),
     app = express(),
     config = require('./config/config.json'),
@@ -74,12 +75,12 @@ function base64Decode(item) {
 
 function authenticateUser(ctx) { return authSystem.authn(ctx); }
 
-
 function postAuthorization (ctx) {
   var deferred = q.defer(),
+      authEndpoint = ctx.oidcserver? ctx.oidcserver.replace('/authorize', '/auth') : config.authEndpoint,
       options = {
-        uri: config.authEndpoint,
         method: 'POST',
+        uri: authEndpoint,
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json'
@@ -87,6 +88,7 @@ function postAuthorization (ctx) {
         form : copyHash(ctx.userInfo)
       };
 
+  console.log('postAuthorization, auth endpoint:' + authEndpoint);
   console.log('postAuthorization, context:' + JSON.stringify(ctx, null, 2));
   options.form.sessionid = ctx.txid;
   delete options.form.status;
@@ -115,11 +117,11 @@ function postAuthorization (ctx) {
 
 function inquireOidcSessionId(ctx){
   var deferred = q.defer(),
+      infoEndpoint = (ctx.oidcserver)? ctx.oidcserver.replace('/oauth2/authorize', '/session') : config.sessionApi.endpoint,
       // send a query to Edge to ask about the OIDC session
-      query = { txid : ctx.txid },
       options = {
-        uri: config.sessionApi.endpoint + '/info?' + querystring.stringify(query),
         method: 'GET',
+        uri:  infoEndpoint + '/info?' + querystring.stringify({ txid : ctx.txid }),
         headers: {
           'apikey': config.sessionApi.apikey,
           'Accept': 'application/json'
@@ -218,7 +220,7 @@ app.get('/login', function (request, response) {
     return ctx;
   }
 
-  q({txid: request.query.sessionid})
+  q({txid: request.query.sessionid, oidcserver: request.query.oidcserver})
     .then(inquireOidcSessionId)
     .done(renderLogin, logError);
 
@@ -253,13 +255,14 @@ app.post('/validateLoginAndConsent', function (request, response) {
     response.render('login', {
       action        : 'Sign in',
       txid          : request.body.sessionid,
+      oidcserver    : request.body.oidcserver,
       client_id     : request.body.client_id,
       response_type : request.body.response_type,
       req_scope     : request.body.requestedScopes,
       redirect_uri  : request.body.redirect_uri,
       req_state     : request.body.clientState,
       appName       : request.body.appName,
-      appLogoUrl    : request.body.appLogoUrl,
+      appLogoUrl    : request.body.appLogoUrl || defaultAppLogo,
       display       : request.body.display,
       login_hint    : request.body.login_hint,
       errorMessage  : "You must specify a user and a password."
@@ -282,13 +285,14 @@ app.post('/validateLoginAndConsent', function (request, response) {
         response.render('login', {
           action        : 'Sign in',
           txid          : ctx.txid,
+          oidcserver    : request.body.oidcserver,
           client_id     : request.body.client_id,
           response_type : request.body.response_type,
           req_scope     : request.body.requestedScopes,
           redirect_uri  : request.body.redirect_uri,
           req_state     : request.body.clientState,
           appName       : request.body.appName,
-          appLogoUrl    : request.body.appLogoUrl,
+          appLogoUrl    : request.body.appLogoUrl || defaultAppLogo,
           display       : request.body.display,
           login_hint    : request.body.login_hint,
           errorMessage  : "That login failed."
@@ -302,13 +306,14 @@ app.post('/validateLoginAndConsent', function (request, response) {
       response.render('consent', {
         action        : 'Consent',
         txid          : ctx.txid,
+        oidcserver    : request.body.oidcserver,
         client_id     : request.body.client_id,
         response_type : request.body.response_type,
         req_scope     : request.body.requestedScopes,
         redirect_uri  : request.body.redirect_uri,
         req_state     : request.body.clientState,
         appName       : request.body.appName,
-        appLogoUrl    : request.body.appLogoUrl,
+        appLogoUrl    : request.body.appLogoUrl || defaultAppLogo,
         display       : request.body.display,
         login_hint    : request.body.login_hint,
         userProfile   : base64Encode(JSON.stringify(ctx.userInfo))
@@ -340,8 +345,9 @@ app.post('/grantConsent', function (request, response) {
   }
 
   var context = {
-    userInfo : JSON.parse(base64Decode(request.body.userProfile)),
-    txid : request.body.sessionid
+        userInfo : JSON.parse(base64Decode(request.body.userProfile)),
+        txid : request.body.sessionid,
+        oidcserver : request.body.oidcserver
   };
   q(context)
     .then(postAuthorization)

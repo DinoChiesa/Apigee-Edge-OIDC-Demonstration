@@ -10,7 +10,7 @@
 // exports.
 //
 // created: Wed Jun 15 14:13:56 2016
-// last saved: <2016-June-15 17:25:19>
+// last saved: <2017-April-04 15:20:28>
 
 
 (function (globalScope){
@@ -149,21 +149,22 @@ function authenticateUserInUsergrid(ctx) {
     console.log('Authenticate %s/%s against localDB', ctx.credentials.username, ctx.credentials.password);
     var storedRecord = localUserDb[ctx.credentials.username];
     if (storedRecord && storedRecord.hash) {
-      // user has been found
-      var computedHash = crypto.createHash('sha256')
-        .update(ctx.credentials.password)
-        .digest("hex")
-        .toLowerCase();
-      if (computedHash == storedRecord.hash) {
+      console.log('authenticateAgainstLocalUserDb: user has been found');
+      if (storedRecord.hash == ctx.credentials.password) {
+        console.log('authenticateAgainstLocalUserDb: user authentic');
         var copy = shallowCopyObject(storedRecord);
         delete(copy.hash);
         copy.email = ctx.credentials.username;
         ctx.loginStatus = 200;
         ctx.userInfo = copy;
       }
+      else {
+        console.log('authenticateAgainstLocalUserDb: user not authentic');
+        ctx.loginStatus = 401;
+      }
     }
     else {
-      ctx.loginStatus = 404;
+      ctx.loginStatus = 401;
     }
     return ctx;
   }
