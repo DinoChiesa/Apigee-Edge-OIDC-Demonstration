@@ -1,9 +1,8 @@
 {
   "name": "oidcConsent1-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
-    "node-getopt" : "~0.2.3",
-    "request" : "~2.69.0",
+    "node-getopt": "~0.2.3",
     "q": "~1.4.1"
   },
   "engines": {

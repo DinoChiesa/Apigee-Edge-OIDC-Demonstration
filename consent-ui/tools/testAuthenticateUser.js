@@ -3,8 +3,8 @@
 //
 // A node app that connects with usergrid to authenticate a user. It
 // relies on a userAuthentication module that exports methods to
-// authenticate against a local DB, or against usergrid, or ... with a
-// faked always-positive response.
+// authenticate against a local DB, or against other user authentication
+// service, eg, ... with a faked always-positive response.
 //
 // Run this with
 //     node ./authenticateUser.js
@@ -28,12 +28,13 @@
 var q = require('q'),
     config = require('./../webapp/config/config.json'),
     userAuth = require('./../webapp/lib/userAuthentication.js'),
+    userAuthOptions = Object.keys(userAuth),
     authSystem,
     Getopt = require('node-getopt'),
     getopt = new Getopt([
       ['u', 'username=ARG', 'the username to authenticate.'],
       ['p', 'password=ARG', 'the password for the user.'],
-      ['a', 'authn=ARG', 'the authn system to use. One of {fake, usergrid, local}'],
+      ['a', 'authn=ARG', 'the authn system to use. currently One of {' + userAuthOptions.join(',')+'}'],
       ['h', 'help']
     ]).bindHelp(),
 
@@ -65,7 +66,6 @@ else {
   process.exit(1);
 }
 
-
 function logError(e) {
   console.log('unhandled error: ' + e);
   console.log(e.stack);
@@ -75,14 +75,12 @@ function reportOut(ctx) {
   console.log('context: ' + JSON.stringify(ctx, null, 2));
 }
 
-
 var context = {
       credentials : {
         username : opt.options.username,
         password : opt.options.password
       }
     };
-
 
 authSystem.config(config);
 
