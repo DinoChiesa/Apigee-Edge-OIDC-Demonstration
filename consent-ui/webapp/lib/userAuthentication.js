@@ -2,15 +2,13 @@
 // ------------------------------------------------------------------
 //
 // A module to do user authentication. It supports three different mechanisms,
-// currently: fake, local, and usergrid. The usergrid authentication does not rely
-// on the usergrid npm module. Not needed, since there's really only one call made
-// to usergrid: a request-for-token.
+// currently: fake, and local.
 //
 // This module could be extended by adding new functions and expanding the list of
-// exports.
+// exports. Good candidates might be firebase auth, or Google Signin.
 //
 // created: Wed Jun 15 14:13:56 2016
-// last saved: <2017-April-04 15:20:28>
+// last saved: <2018-August-28 11:06:38>
 
 
 (function (globalScope){
@@ -35,78 +33,6 @@
       given_name  : 'Freda'
     };
     return ctx;
-  }
-
-function authenticateUserInUsergrid(ctx) {
-  var deferred = q.defer(),
-      uri = ugConfig.uri || 'https://api.usergrid.com/' ,
-        options = {
-          uri: uri + ugConfig.org + '/' + ugConfig.app + '/token',
-          method: 'POST',
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          },
-          form : {
-            grant_type : 'password',
-            username : ctx.credentials.username,
-            password : ctx.credentials.password
-          }
-        };
-
-    console.log('Authenticate %s/%s against usergrid', ctx.credentials.username, ctx.credentials.password);
-
-    request(options, function(error, response, body) {
-      console.log('authn response: ' + response.statusCode);
-      ctx.loginStatus = response.statusCode;
-      if (response.statusCode == 200) {
-        try {
-          body = JSON.parse(body);
-          // {
-          //   "access_token": "YWMtfLrJtOA.._TZG46Vfit-Ok",
-          //   "expires_in": 604800,
-          //   "user": {
-          //     "uuid": "7fc95522-ff6b-11e1-b1ca-12313d2b9967",
-          //     "type": "user",
-          //     "name": "Bob Odell",
-          //     "created": 1347737296831,
-          //     "modified": 1456883878639,
-          //     "username": "BobO",
-          //     "email": "bob@odell.com",
-          //     "activated": true,
-          //     "family_name": "Odell",
-          //     "gender": "M",
-          //     "given_name": "Bob"
-          //   }
-          // }
-          ctx.userInfo = body.user;
-          if ( ! ctx.userInfo.user_id) {
-            ctx.userInfo.user_id = ctx.userInfo.username;
-          }
-          if ( ! ctx.userInfo.picture) {
-            ctx.userInfo.picture = "http://i.imgur.com/60rQbfy.png";
-          }
-        }
-        catch (exc1) {
-          console.log('authn exception: ' + exc1.message);
-          console.log(exc1.stack);
-        }
-      }
-      else {
-        console.log('authn, statusCode = ' + response.statusCode);
-        console.log('authn, body = ' + body);
-      }
-      deferred.resolve(ctx);
-    });
-
-    return deferred.promise;
-  }
-
-  function configUsergridConnection(config) {
-    if ( ! config.usergrid.app || !config.usergrid.org) {
-      throw new Error("specify a valid Usergrid org + app");
-    }
-    ugConfig = config.usergrid;
   }
 
   function joinPathElements() {
@@ -148,18 +74,18 @@ function authenticateUserInUsergrid(ctx) {
 
     console.log('Authenticate %s/%s against localDB', ctx.credentials.username, ctx.credentials.password);
     var storedRecord = localUserDb[ctx.credentials.username];
-    if (storedRecord && storedRecord.hash) {
+    if (storedRecord && storedRecord.password) {
       console.log('authenticateAgainstLocalUserDb: user has been found');
-      if (storedRecord.hash == ctx.credentials.password) {
-        console.log('authenticateAgainstLocalUserDb: user authentic');
+      if (storedRecord.password == ctx.credentials.password) {
+        console.log('authenticateAgainstLocalUserDb: user is authentic');
         var copy = shallowCopyObject(storedRecord);
-        delete(copy.hash);
+        delete(copy.password);
         copy.email = ctx.credentials.username;
         ctx.loginStatus = 200;
         ctx.userInfo = copy;
       }
       else {
-        console.log('authenticateAgainstLocalUserDb: user not authentic');
+        console.log('authenticateAgainstLocalUserDb: user is not authentic');
         ctx.loginStatus = 401;
       }
     }
@@ -186,11 +112,7 @@ function authenticateUserInUsergrid(ctx) {
     local : {
       config: configureLocalAuth,
       authn: authenticateAgainstLocalUserDb
-    },
-    usergrid : {
-        config: configUsergridConnection,
-        authn : authenticateUserInUsergrid
-      }
+    }
   };
 
 

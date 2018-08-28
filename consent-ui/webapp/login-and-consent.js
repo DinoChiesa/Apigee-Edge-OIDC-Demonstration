@@ -35,7 +35,7 @@ var express = require('express'),
     app = express(),
     config = require('./config/config.json'),
     userAuth = require('./lib/userAuthentication.js'),
-    authSystem = userAuth[config.authSystem || 'usergrid'],
+    authSystem = userAuth[config.authSystem || 'local'],
     httpPort;
 
 require ('./lib/dateExtensions.js');
@@ -65,6 +65,19 @@ function copyHash(obj) {
   return copy;
 }
 
+function formifyHash(obj) {
+  // By default, qs serializes an array like roles : [ 'foo', 'bar', 'bam']
+  // into roles[0]=foo&roles[1]=bar&roles[2]=bam
+  // We want
+  // into roles=foo bar bam
+  var result = {};
+  Object.keys(obj).forEach(function(key) {
+    var prop = obj[key];
+    result[key] = (Array.isArray(prop)) ? prop.join(' ') : prop;
+  });
+  return result;
+}
+
 function base64Encode(item) {
   return new Buffer(item).toString('base64');
 }
@@ -85,7 +98,7 @@ function postAuthorization (ctx) {
           'content-type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json'
         },
-        form : copyHash(ctx.userInfo)
+        form : formifyHash(copyHash(ctx.userInfo))
       };
 
   console.log('postAuthorization, auth endpoint:' + authEndpoint);
