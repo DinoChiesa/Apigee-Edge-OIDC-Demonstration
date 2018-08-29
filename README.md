@@ -36,19 +36,23 @@ You can set up this demonstration in your organization, following these steps:
 
 1. create a cache in Edge called 'cache1' in your desired deployment environment.
    ```
-   node ./1-provisionCache.js -v -n -o myorg -e myenv
+   ORG=myorg
+   ENV=myenv
+   APIGEEADMIN=apigeeadmin@example.com
+   node ./1-provisionCache.js -v -u $APIGEEADMIN -o $ORG -e $ENV
    ```
+
+   For this script and all following, you can use -n, in lieu of -u $APIGEEADMIN, to
+   tell the script to source your credentials from the .netrc file.
 
 2. deploy the proxies to an edge org + env
    ```
-   ORG=myorg
-   ENV=myenv
-   node ./2-importAndDeployAllProxies.js -v -n -o $ORG -e $ENV
+   node ./2-importAndDeployAllProxies.js -v -u $APIGEEADMIN -o $ORG -e $ENV
    ```
 
 3. provision the OIDC Session product and developer app.
    ```
-   node ./3-provisionSessionProductAndApp.js -v -n -o $ORG
+   node ./3-provisionSessionProductAndApp.js -v -u apigeeadmin@example.com -o $ORG
    ```
 
 4. Modify the [config for the login-and-consent app](consent-ui-webapp/config/config.json)
@@ -67,16 +71,15 @@ You can set up this demonstration in your organization, following these steps:
 
 6. in Edge, create the developer, API Product, and App for OIDC Core use.
    ```
-   node ./4-provisionCoreProductAndApp.js -v -n -o myorg -U URL_FROM_ABOVE
+   node ./4-provisionCoreProductAndApp.js -v -u $APIGEEADMIN -o $ORG -U URL_FROM_ABOVE
    ```
 
    The URL_FROM_ABOVE should be the /login endpoint for the login and consent app.
 
-7. Kick off the login by using
-   https://dinochiesa.github.io/openid-connect/link-builder2.html or build your URL
-   manually.  ... specifying your org, env, chosen basepath (See step 1), the client id
-   from the final step, any nonce and state, the callback url from above, and etc. For
-   example:
+7. Kick off the login by opening your browser to
+   https://dinochiesa.github.io/openid-connect/link-builder2.html and filling out the
+   form. Specify your org, env, the client id and secret from the final
+   step, a nonce and state, the callback url from above, and etc. For example:
 
    | setting       | value                                                            |
    | ------------- | ---------------------------------------------------------------- |
@@ -86,21 +89,33 @@ You can set up this demonstration in your organization, following these steps:
    | scope         | openid profile                                                   |
 
 
-## Using the Link Builder
+## Notes on Using the Link Builder
 
 The link builder is just a webform that helps you build the link to kick off the OIDC
-flow.  Fill out all the fields, with the data from your configuration. It uses
+flow. Fill out all the fields, with the data from your configuration. It uses
 localStorage to retain that information for next time.
 
-When you fill out the form, the hyperlink at the bottom is dynamically updated. I
-suggest you alt-click the link when you're ready, so the login page appears in a new
-browser window.
+When you fill out the form, the hyperlink at the bottom is dynamically updated. 
+
+![link builder](docs/OIDC_Link_Builder2.png)
+
+I suggest you alt-click the link when you're ready, so the login page appears in a new
+browser window. The login page looks like this:
+
+![login page](docs/screenshot-20180828-180759.png)
 
 If you have an authorization_code flow (response_type=code), after you login and
-consent, you will get a code.  Copy the code, then return to the link-builder
+consent, you will get a code. Copy the code, then return to the link-builder
 page. Paste the code into the form at the bottom.  The very bottom of the page will show
 a curl command that will redeem the code for an oauth token. Click the "copy" button and
 run that curl command from the terminal to retrieve the token.
+
+If you use response_type=id_token, you will get a token directly. The page will show the decoded token.
+This is the token the client app would receive after an OpenID Connect authentication motion.
+
+The decoded token looks like this:
+
+![decoded token](docs/screenshot-20180828-180857.png)
 
 
 ## Possible Tweaks or Modifications
@@ -147,3 +162,7 @@ There are 4 proxies in this package.
 If you want to demonstrate only token or code issuance (including JWT issuance) via
 OIDC, then you need only the core and session proxies. This demonstration does not
 illustrate the userinfo or discovery pieces of OIDC.
+
+# Bugs
+
+* The JWT construction does not use the built-in policies.
