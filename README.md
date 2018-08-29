@@ -95,7 +95,7 @@ The link builder is just a webform that helps you build the link to kick off the
 flow. Fill out all the fields, with the data from your configuration. It uses
 localStorage to retain that information for next time.
 
-When you fill out the form, the hyperlink at the bottom is dynamically updated. 
+When you fill out the form, the hyperlink at the bottom is dynamically updated.
 
 ![link builder](docs/OIDC_Link_Builder2.png)
 
@@ -103,6 +103,8 @@ I suggest you alt-click the link when you're ready, so the login page appears in
 browser window. The login page looks like this:
 
 ![login page](docs/screenshot-20180828-180759.png)
+
+You can read more details about the [Consent UI](./Consent-UI.md).
 
 If you have an authorization_code flow (response_type=code), after you login and
 consent, you will get a code. Copy the code, then return to the link-builder
