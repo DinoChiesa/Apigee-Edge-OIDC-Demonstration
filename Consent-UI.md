@@ -129,16 +129,16 @@ That [Procfile](webapp/Procfile) file is used for Heroku. You don't need it if y
 
 
 
-## Appendix: Requests handled Here
+## Internals of the app
 
-You ought to be able to use this webapp as-is, with just the configuration described above.
-In most circumstances, there ought be no reason to have to dig into the code.  Even so, for clarity and completeness, I've written up a quick description of the inbound requests handled by this web app.  For all inbound requests not described below here, this webapp issues a 404.
+This webapp will work for demonstration purposes, as-is, with just the configuration described above.
+But in case you want to dig into the codem here's a quick description of the inbound requests handled by this web app.  For all inbound requests not described below here, this webapp issues a 404.
 
 
 ### Request for Login Form
 
 ```
-GET /login?sessionid=rrt328ea-9654-2669911-1&scope=openid%20profile
+GET /login?sessionid=rrt328ea-9654-2669911-1&scope=openid%20profile&oidc_server=URL
 ```
 
 The sessionid is set by the OAuth token dispensary (in this case Apigee Edge).  It really is a pointer to a cache entry held in Edge containing the originating (and previously validated) client_id, and scope, etc.
@@ -146,6 +146,8 @@ The sessionid is set by the OAuth token dispensary (in this case Apigee Edge).  
 The logic for the login page first inquires with Edge about the session id at a well-known endpoint : /info. If that is valid, then the page renders a login form to the user. One could imagine setting a cookie in the user browser containing settings from "remember me" and "keep me logged in" checkboxes, so that the user need not login *every time*, and if he is logging in, then he gets prompted with his username or even a profile photo (a la Google signin).  But I didn't implement that in this sample.  (PRs accepted!)
 
 The login form is simplistic - just asks for a username and password. It's currently unskinned.  You could skin it pretty easily.
+
+The oidc_server query param tells the login app which authorization endpoint to use.
 
 
 ### Login Form Postback
@@ -171,7 +173,7 @@ The form payload for this form includes:
 * appName
 * appLogoUrl
 
-Most of these are hidden fields that are posted back transparently.
+Most of these are posted back via hidden fields in the form.
 
 
 ### Consent Form Postback
@@ -193,4 +195,16 @@ The form contents include:
 * userProfile - a base64-encoded string containing user info from the authentication service. (This is insecure, but it's just a demo. Normally you'd want this in a cookie.
 
 
-If the user has granted consent, then the login-and-consent app posts to the auth endpoint (on Edge) to get the redirect URL for this OpenID Connect session. The login-and-consent app then responds to the user-agent with a 302, using that redirect URL as the Location header.
+If the user has granted consent, then the login-and-consent app posts to the auth
+endpoint (on Edge) to get the redirect URL for this OpenID Connect session. The
+login-and-consent app then responds to the user-agent with a 302, using that redirect
+URL as the Location header.
+
+### Tracing
+
+If you want to see all the interactions,
+* start an Apigee Edge trace session for the oidc-core proxy
+* start an Apigee Edge trace session for the oidc-session proxy
+* monitor the logs of the consent web app (maybe with heroku logs -t)
+
+You will see all the messages flowing back and forth.
