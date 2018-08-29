@@ -2,8 +2,8 @@
   <DisplayName>Error: Unknown Request</DisplayName>
   <FaultResponse>
     <Set>
-      <Payload contentType="applcation/json">\{
-  "error": \{
+      <Payload contentType="applcation/json">{
+  "error": {
     "message": "Bad Request; not found."
   }
 }</Payload>

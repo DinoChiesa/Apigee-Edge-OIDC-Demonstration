@@ -9,7 +9,7 @@
         </Request>
         <Response>
             <Step>
-                <Name>discovery_reponse</Name>
+                <Name>AM-DiscoveryReponse</Name>
             </Step>
         </Response>
     </PreFlow>

@@ -2,9 +2,10 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Aug 25 17:04:26 2014
-// last saved: <2014-August-25 17:04:39>
+// last saved: <2018-August-28 14:14:44>
 
-
+(function (){
+  'use strict';
 
     // Simulates PHP's date function
     Date.prototype.format = function(format) {
@@ -22,7 +23,6 @@
         }
         return returnStr;
     };
-
 
     Date.replaceChars = {
         shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -172,3 +172,5 @@
             return this.getTime() / 1000;
         }
     };
+
+}());

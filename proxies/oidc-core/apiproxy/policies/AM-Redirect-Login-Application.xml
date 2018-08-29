@@ -1,12 +1,12 @@
 <AssignMessage name="AM-Redirect-Login-Application">
-  <DisplayName>Assign Headers for Redirect to Login Application</DisplayName>
+  <DisplayName>AM-Redirect-Login-Application</DisplayName>
   <Remove>
     <Payload/>
   </Remove>
   <Set>
     <StatusCode>302</StatusCode>
     <Headers>
-      <Header name="Location">{oidc_loginUrl}?sessionid={messageid}&amp;scope={oidc_scope}</Header>
+      <Header name="Location">{oidc_loginUrl}?sessionid={messageid}&amp;scope={oidc_scope}&amp;oidcserver={oidc_server}</Header>
       <Header name="Access-Control-Allow-Origin">*</Header>
       <Header name='Access-Control-Allow-Methods'>POST, GET, OPTIONS</Header>
       <Header name='Access-Control-Allow-Headers'>Accept, Content-Type, connection, content-length, Authorization, Location</Header>

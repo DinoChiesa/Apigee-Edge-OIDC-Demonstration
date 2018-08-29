@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<APIProxy revision="1" name="openid-connect-discovery-api">
+<APIProxy revision="1" name="oidc-discovery">
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1439693500737</CreatedAt>
     <CreatedBy>adminui@apigee.com</CreatedBy>
     <Description></Description>
-    <DisplayName>openid-connect-discovery-api</DisplayName>
+    <DisplayName>oidc-discovery</DisplayName>
     <LastModifiedAt>1444063394945</LastModifiedAt>
     <LastModifiedBy>adminui@apigee.com</LastModifiedBy>
     <Policies>

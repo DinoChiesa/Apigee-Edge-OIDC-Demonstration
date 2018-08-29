@@ -1,7 +1,7 @@
 <ProxyEndpoint name='default'>
   <Description>Default Proxy</Description>
   <HTTPProxyConnection>
-    <BasePath>/E1A50130-A38A-4D0C-A365-3A6CCFF80523/session</BasePath>
+    <BasePath>/oidc-session</BasePath>
     <Properties/>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>

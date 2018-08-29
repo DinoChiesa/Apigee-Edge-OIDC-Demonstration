@@ -27,7 +27,7 @@
         <Response/>
     </PostFlow>
     <HTTPProxyConnection>
-        <BasePath>/v1/userinfo</BasePath>
+        <BasePath>/oidc-userinfo</BasePath>
         <VirtualHost>default</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="noroute"/>

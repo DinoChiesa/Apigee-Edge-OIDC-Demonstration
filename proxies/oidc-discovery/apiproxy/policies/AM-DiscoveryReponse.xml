@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="discovery_reponse">
+<AssignMessage name="AM-DiscoveryReponse">
     <DisplayName>discovery_reponse</DisplayName>
     <Properties/>
     <Set>
@@ -8,7 +8,7 @@
         </Headers>
         <QueryParams/>
         <FormParams/>
-      <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">{
+      <Payload contentType="application/json">{
    "issuer":"http://emea-demo9-test.apigee.net",
    "authorization_endpoint":"https://emea-demo9-test.apigee.net/oauth2/v1/authorize",
    "token_endpoint":"https://emea-demo9-test.apigee.net/oauth2/v1/token",

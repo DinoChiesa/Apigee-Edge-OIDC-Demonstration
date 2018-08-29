@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<APIProxy revision="4" name="openid-connect-core">
+<APIProxy revision="4" name="oidc-core">
     <ConfigurationVersion majorVersion="4" minorVersion="0"/>
     <CreatedAt>1441818436910</CreatedAt>
     <CreatedBy>noreply_admin@apigee.com</CreatedBy>
-    <Description>OpenID Connect</Description>
-    <DisplayName>openid-connect-core</DisplayName>
+    <Description>OpenID Connect Core services</Description>
+    <DisplayName>oidc-core</DisplayName>
     <LastModifiedAt>1466126574029</LastModifiedAt>
     <LastModifiedBy>noreply_admin@apigee.com</LastModifiedBy>
     <Policies>

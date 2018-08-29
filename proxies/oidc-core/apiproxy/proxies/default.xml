@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="default">
   <HTTPProxyConnection>
-    <BasePath>/E1A50130-A38A-4D0C-A365-3A6CCFF80523/oauth2</BasePath>
+    <BasePath>/oidc-core/oauth2</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
   <Description/>
@@ -52,6 +52,7 @@
         <Step><Name>CP-AuthorizationSession</Name></Step>
       </Request>
       <Response>
+        <Step><Name>JS-GetBaseUrl</Name></Step>
         <Step><Name>AM-Redirect-Login-Application</Name></Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/authorize") and (request.verb = "GET")</Condition>

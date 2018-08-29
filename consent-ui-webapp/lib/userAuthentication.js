@@ -8,17 +8,18 @@
 // exports. Good candidates might be firebase auth, or Google Signin.
 //
 // created: Wed Jun 15 14:13:56 2016
-// last saved: <2018-August-28 11:06:38>
+// last saved: <2018-August-28 14:13:28>
 
 
 (function (globalScope){
-  var q = require('q'),
-      request = require('request'),
+  var request = require('request'),
       crypto = require('crypto'),
       ugConfig,
       localUserDb;
 
-  function configureNoop(config) { }
+  function configureNoop(config) {
+    return Promise.resolve(config);
+  }
 
   function alwaysAuthenticateSuccessfully(ctx) {
     ctx.loginStatus = 200;
@@ -32,7 +33,7 @@
       family_name : 'Williams',
       given_name  : 'Freda'
     };
-    return ctx;
+    return Promise.resolve(ctx);
   }
 
   function joinPathElements() {
@@ -60,6 +61,7 @@
     }
 
     loadLocalUserDb(config.localUserDb);
+    return Promise.resolve(config);
   }
 
   function authenticateAgainstLocalUserDb(ctx) {
@@ -92,7 +94,7 @@
     else {
       ctx.loginStatus = 401;
     }
-    return ctx;
+    return Promise.resolve(ctx);
   }
 
 

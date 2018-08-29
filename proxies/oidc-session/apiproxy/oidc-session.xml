@@ -1,9 +1,9 @@
-<APIProxy revision='1' name='session'>
+<APIProxy revision='1' name='oidc-session'>
   <ConfigurationVersion minorVersion='0' majorVersion='4'/>
   <CreatedAt>1456786910599</CreatedAt>
   <CreatedBy>dino</CreatedBy>
   <Description></Description>
-  <DisplayName>session</DisplayName>
+  <DisplayName>oidc-session</DisplayName>
   <LastModifiedAt>1466042952779</LastModifiedAt>
   <LastModifiedBy>orgAdmin</LastModifiedBy>
   <TargetEndpoints>

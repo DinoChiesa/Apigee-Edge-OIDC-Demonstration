@@ -12,6 +12,7 @@ Icon
 **/target/
 
 **/*.class
+**/node_modules
 
 notes.txt
 example-app1.js

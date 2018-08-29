@@ -1,3 +1,4 @@
+/* jslint esversion:6 */
 // login-and-consent.js
 // ------------------------------------------------------------------
 //
@@ -23,20 +24,18 @@
 //
 // ------------------------------------------------------------------
 
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    querystring = require('querystring'),
-    morgan = require('morgan'), // a logger
-    q = require('q'), // promises
-    request = require('request'),
-    path = require('path'),
-    defaultAppLogo = 'http://i.imgur.com/6DidtRS.png',
-    url = require('url'),
-    app = express(),
-    config = require('./config/config.json'),
-    userAuth = require('./lib/userAuthentication.js'),
-    authSystem = userAuth[config.authSystem || 'local'],
-    httpPort;
+const express        = require('express'),
+      bodyParser     = require('body-parser'),
+      querystring    = require('querystring'),
+      morgan         = require('morgan'), // a logger
+      request        = require('request'),
+      path           = require('path'),
+      defaultAppLogo = 'http://i.imgur.com/6DidtRS.png',
+      url            = require('url'),
+      app            = express(),
+      config         = require('./config/config.json'),
+      userAuth       = require('./lib/userAuthentication.js'),
+      authSystem     = userAuth[config.authSystem || 'local'];
 
 require ('./lib/dateExtensions.js');
 
@@ -86,83 +85,90 @@ function base64Decode(item) {
   return new Buffer(item, 'base64').toString('ascii');
 }
 
-function authenticateUser(ctx) { return authSystem.authn(ctx); }
-
 function postAuthorization (ctx) {
-  var deferred = q.defer(),
-      authEndpoint = ctx.oidcserver? ctx.oidcserver.replace('/authorize', '/auth') : config.authEndpoint,
-      options = {
-        method: 'POST',
-        uri: authEndpoint,
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
-        form : formifyHash(copyHash(ctx.userInfo))
-      };
+  return new Promise((resolve, reject) => {
+    var authEndpoint = ctx.oidcserver? ctx.oidcserver.replace('/authorize', '/auth') : config.authEndpoint,
+        options = {
+          method: 'POST',
+          uri: authEndpoint,
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          form : formifyHash(copyHash(ctx.userInfo))
+        };
 
-  console.log('postAuthorization, auth endpoint:' + authEndpoint);
-  console.log('postAuthorization, context:' + JSON.stringify(ctx, null, 2));
-  options.form.sessionid = ctx.txid;
-  delete options.form.status;
+    console.log('postAuthorization, auth endpoint:' + authEndpoint);
+    console.log('postAuthorization, context:' + JSON.stringify(ctx, null, 2));
+    options.form.sessionid = ctx.txid;
+    delete options.form.status;
 
-  request(options, function(error, response, body) {
-    console.log('auth response: ' + response.statusCode);
-    if (response.statusCode == 302) {
-      try {
-        ctx.authRedirLoc = response.headers.location;
+    request(options, function(error, response, body) {
+      console.log('auth response: ' + response.statusCode);
+      if (response.statusCode == 302) {
+        try {
+          ctx.authRedirLoc = response.headers.location;
+        }
+        catch (exc1) {
+          console.log('auth exception: ' + exc1.message);
+          console.log(exc1.stack);
+          reject(exc1);
+        }
       }
-      catch (exc1) {
-        console.log('auth exception: ' + exc1.message);
-        console.log(exc1.stack);
+      else {
+        console.log('auth, statusCode = ' + response.statusCode);
       }
-    }
-    else {
-      console.log('auth, statusCode = ' + response.statusCode);
-    }
-    deferred.resolve(ctx);
+      resolve(ctx);
+    });
   });
-
-  return deferred.promise;
 }
 
 
-
-function inquireOidcSessionId(ctx){
-  var deferred = q.defer(),
-      infoEndpoint = (ctx.oidcserver)? ctx.oidcserver.replace('/oauth2/authorize', '/session') : config.sessionApi.endpoint,
-      // send a query to Edge to ask about the OIDC session
-      options = {
-        method: 'GET',
-        uri:  infoEndpoint + '/info?' + querystring.stringify({ txid : ctx.txid }),
-        headers: {
-          'apikey': config.sessionApi.apikey,
-          'Accept': 'application/json'
-        }
-      };
-
-  console.log('inquireOidcSessionId request: ' + JSON.stringify(options, null, 2));
-
-  request(options, function(error, response, body) {
-    console.log('inquireOidcSessionId response: ' + body);
-    if (response.statusCode == 200) {
-      try {
-        body = JSON.parse(body);
-        // Edge knows about the session and has returned information about it.
-        ctx.sessionInfo = body;
-      }
-      catch (exc1) {
-        console.log('inquireOidcSessionId exception: ' + exc1.message);
-      }
-      deferred.resolve(ctx);
+function inquireOidcSessionId(ctx) {
+  return new Promise((resolve, reject) => {
+    // send a query to Edge to ask about the OIDC session
+    var infoEndpoint;
+    if (ctx.oidcserver) {
+      infoEndpoint = ctx.oidcserver.replace('/oidc-core/oauth2/authorize', '/oidc-session');
     }
     else {
-      console.log('inquireOidcSessionId, statusCode = ' + response.statusCode);
-      deferred.resolve(ctx);
+      ctx.oidcserver = infoEndpoint = config.sessionApi.endpoint;
     }
-  });
 
-  return deferred.promise;
+    const options = {
+            method: 'GET',
+            uri:  infoEndpoint + '/info?' + querystring.stringify({ txid : ctx.txid }),
+            headers: {
+              'apikey': config.sessionApi.apikey,
+              'Accept': 'application/json'
+            }
+          };
+
+    console.log('inquireOidcSessionId request: ' + JSON.stringify(options, null, 2));
+
+    request(options, function(error, response, body) {
+      console.log('inquireOidcSessionId response: ' + body);
+      if (error) {
+        return reject(error);
+      }
+      if (response.statusCode == 200) {
+        try {
+          body = JSON.parse(body);
+          // Edge knows about the session and has returned information about it.
+          ctx.sessionInfo = body;
+        }
+        catch (exc1) {
+          console.log('inquireOidcSessionId exception: ' + exc1.message);
+          reject(exc1);
+        }
+        resolve(ctx);
+      }
+      else {
+        console.log('inquireOidcSessionId, statusCode = ' + response.statusCode);
+        resolve(ctx);
+      }
+    });
+  });
 }
 
 
@@ -220,6 +226,7 @@ app.get('/login', function (request, response) {
       ctx.viewData = copyHash(ctx.sessionInfo);
       ctx.viewData.action = 'Sign in';
       ctx.viewData.txid = ctx.txid;
+      ctx.viewData.oidcserver = ctx.oidcserver;
       ctx.viewData.errorMessage = null; // must be present and null
       response.render('login', ctx.viewData);
     }
@@ -233,9 +240,14 @@ app.get('/login', function (request, response) {
     return ctx;
   }
 
-  q({txid: request.query.sessionid, oidcserver: request.query.oidcserver})
+  var context = { txid: request.query.sessionid };
+  if (request.query.oidcserver) {
+    context.oidcserver = decodeURIComponent(request.query.oidcserver);
+  }
+  Promise.resolve(context)
     .then(inquireOidcSessionId)
-    .done(renderLogin, logError);
+    .then(renderLogin)
+    .catch(logError);
 
 });
 
@@ -283,15 +295,14 @@ app.post('/validateLoginAndConsent', function (request, response) {
     return;
   }
 
-  var context = {
+  Promise.resolve({
         credentials : {
           username: request.body.username,
           password: request.body.password
         },
         txid : request.body.sessionid
-      };
-  q(context)
-    .then(authenticateUser)
+      })
+    .then(authSystem.authn)
     .then(function(ctx){
       if (ctx.loginStatus != 200) {
         response.status(401);
@@ -334,7 +345,7 @@ app.post('/validateLoginAndConsent', function (request, response) {
 
       return ctx;
     })
-    .done(function() {}, logError);
+    .catch(logError);
 });
 
 
@@ -357,12 +368,12 @@ app.post('/grantConsent', function (request, response) {
     return;
   }
 
-  var context = {
-        userInfo : JSON.parse(base64Decode(request.body.userProfile)),
-        txid : request.body.sessionid,
-        oidcserver : request.body.oidcserver
-  };
-  q(context)
+
+  Promise.resolve({
+      userInfo : JSON.parse(base64Decode(request.body.userProfile)),
+      txid : request.body.sessionid,
+      oidcserver : request.body.oidcserver
+    })
     .then(postAuthorization)
     .then(function(ctx){
       response.status(302);
@@ -376,9 +387,8 @@ app.post('/grantConsent', function (request, response) {
       response.end();
       return ctx;
     })
-    .done(function() {}, logError);
+    .catch(logError);
 });
-
 
 
 app.get('/*', function (request, response) {
@@ -390,7 +400,7 @@ app.get('/*', function (request, response) {
 });
 
 
-httpPort = process.env.PORT || 5150;
+var httpPort = process.env.PORT || 5150;
 app.listen(httpPort, function() {
   console.log('Listening on port ' + httpPort);
 });
