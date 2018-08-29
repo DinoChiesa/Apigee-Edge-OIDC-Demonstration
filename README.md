@@ -128,7 +128,7 @@ The decoded token looks like this:
 
 * modify the config for the login-and-consent app to specify a different authentication
   service to use. 'local' is easiest. (See the [Readme for the consent
-  webapp](consent-ui/Readme.md).)
+  webapp](./Consent-UI.md).
 
 
 
