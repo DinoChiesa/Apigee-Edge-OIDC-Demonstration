@@ -4,9 +4,8 @@
 // This is a mock user validation database. This hash stores usernames
 // and passwords, as well as other data for the users, like roles and
 // motto. You would never do this in a real system. It's a mock.
+// The user credentials grant access only to the assets in this demonstration.
 //
-// created: Fri Mar 25 20:01:12 2016
-// last saved: <2018-August-28 11:10:11>
 
 var userDb = {
 
@@ -47,7 +46,7 @@ var userDb = {
       },
 
       "carlos@thecircle.com" : {
-        password: 'Wizard123',
+        password: 'IloveAPIs',
         uuid: '0B1A8BFF-5000-4868-817E-3C157510C1D9',
         given_name: "Carlos",
         family_name: "Eberhardt",
@@ -55,9 +54,8 @@ var userDb = {
         roles: ['reader']
       },
 
-
       "vidya@apigee.com": {
-        password : '1Performance',
+        password : 'IloveAPIs',
         uuid: '11F795B4-F5FD-4A05-8B8C-BADD30098ABA',
         motto: 'This is the good part.',
         given_name: "Vidya",
@@ -66,7 +64,7 @@ var userDb = {
       },
 
       "sudhee@apigee.com" : {
-        password: 'Imagine4',
+        password: 'IloveAPIs',
         uuid: '12B1854A-BD79-4857-83C1-29457B3972B8',
         motto: 'Imagine it, Believe it, Make it Real.',
         given_name: "Sudhee",
@@ -75,7 +73,7 @@ var userDb = {
       },
 
       "nandan@apigee.com" : {
-        password: 'ItsAllAboutTheFlow',
+        password: 'IloveAPIs',
         uuid: '5F944A2F-4758-476E-9008-262D6C3728C8',
         motto: 'Seek first to understand, and then to be understood.',
         given_name: "Nandan",
@@ -84,7 +82,7 @@ var userDb = {
       },
 
       "cass@apigee.com" : {
-        password: 'OpenIdConnect99',
+        password: 'IloveAPIs',
         uuid: '71FCF1E6-8391-4C04-B94B-6742EF0A6B61',
         motto: 'The trouble with me having an open mind is that people will try to put things in it.',
         given_name: "Cass",
@@ -93,7 +91,7 @@ var userDb = {
       },
 
       "kevinford@google.com" : {
-        password: '!n0r1t5@C',
+        password: 'IloveAPIs',
         uuid: '4F942D97-C22F-4845-855D-0B5108E440EE',
         motto: 'Keep calm, I\'m an architect.',
         given_name: "Kevin",
