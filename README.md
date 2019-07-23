@@ -38,6 +38,7 @@ You can set up this demonstration in your organization, following these steps:
    ```
    ORG=myorg
    ENV=myenv
+   cd tools
    APIGEEADMIN=apigeeadmin@example.com
    node ./1-provisionCache.js -v -u $APIGEEADMIN -o $ORG -e $ENV
    ```
@@ -52,8 +53,9 @@ You can set up this demonstration in your organization, following these steps:
 
 3. provision the OIDC Session product and developer app.
    ```
-   node ./3-provisionSessionProductAndApp.js -v -u apigeeadmin@example.com -o $ORG
+   node ./3-provisionSessionProductAndApp.js -v -u $APIGEEADMIN -o $ORG
    ```
+   This will run for a minute or so, and then emit an API Key for the Session API.  You'll use it in the next step.
 
 4. Modify the [config for the login-and-consent app](consent-ui-webapp/config/config.json)
    to specify the API Key for the Session API.  It should look like this:
@@ -67,7 +69,7 @@ You can set up this demonstration in your organization, following these steps:
    }
    ```
 
-5. deploy the login-and-consent webapp to a location that is reachable from the internet, like Heroku.
+5. deploy the login-and-consent webapp to a location that is reachable from the internet, like Google App Engine.
 
 6. in Edge, create the developer, API Product, and App for OIDC Core use.
    ```
@@ -77,7 +79,7 @@ You can set up this demonstration in your organization, following these steps:
    The URL_FROM_ABOVE should be the /login endpoint for the login and consent app.
 
 7. Kick off the login by opening your browser to
-   https://dinochiesa.github.io/openid-connect/link-builder2.html and filling out the
+   [link-builder](https://dinochiesa.github.io/openid-connect/link-builder2.html) and filling out the
    form. Specify your org, env, the client id and secret from the final
    step, a nonce and state, the callback url from above, and etc. For example:
 

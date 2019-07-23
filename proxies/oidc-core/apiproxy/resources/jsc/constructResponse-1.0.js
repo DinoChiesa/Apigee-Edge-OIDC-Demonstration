@@ -3,10 +3,11 @@
  *
  * construct.response-1.0.js
 */
+/* global context */
 
 var application_uri = context.getVariable("redirect_uri"),
     state = context.getVariable("req_state"),
-    id_token= context.getVariable("jwt_jwt"),
+    id_token= context.getVariable("output_jwt"),
     access_token = context.getVariable("apigee.access_token"),
     code = context.getVariable("oauthv2authcode.OAuthV2-GenerateAuthorizationCode.code"),
     expires = context.getVariable("oauthv2accesstoken.OAuthV2-GenerateAccessToken-Implicit.expires_in"),

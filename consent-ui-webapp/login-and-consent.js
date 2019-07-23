@@ -1,4 +1,5 @@
-/* jslint esversion:6 */
+/* jslint esversion:9 */
+/* global process, Buffer*/
 // login-and-consent.js
 // ------------------------------------------------------------------
 //
@@ -52,8 +53,9 @@ function getType(obj) {
 }
 
 function logError(e) {
-  console.log('unhandled error: ' + e);
-  console.log(e.stack);
+  //console.log('unhandled error: ' + e);
+  console.log('unhandled error: ' + JSON.stringify(e));
+  if (e.stack) { console.log(e.stack); }
 }
 
 function copyHash(obj) {
@@ -85,9 +87,15 @@ function base64Decode(item) {
   return new Buffer(item, 'base64').toString('ascii');
 }
 
+function getGrantType(responseType) {
+  let parts = responseType.split(' ');
+  return (parts.indexOf('code') != -1) ? 'authorization_code': 'implicit';
+}
+
 function postAuthorization (ctx) {
   return new Promise((resolve, reject) => {
     var authEndpoint = ctx.oidcserver? ctx.oidcserver.replace('/authorize', '/auth') : config.authEndpoint,
+        formParams = copyHash(ctx.userInfo),
         options = {
           method: 'POST',
           uri: authEndpoint,
@@ -95,7 +103,7 @@ function postAuthorization (ctx) {
             'content-type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           },
-          form : formifyHash(copyHash(ctx.userInfo))
+          form : formifyHash({ ...formParams, grant_type : getGrantType(ctx.response_type)})
         };
 
     console.log('postAuthorization, auth endpoint:' + authEndpoint);
@@ -125,15 +133,18 @@ function postAuthorization (ctx) {
 
 
 function inquireOidcSessionId(ctx) {
+  console.log('inquireOidcSessionId ctx: ' + JSON.stringify(ctx, null, 2));
+
   return new Promise((resolve, reject) => {
     // send a query to Edge to ask about the OIDC session
-    var infoEndpoint;
-    if (ctx.oidcserver) {
-      infoEndpoint = ctx.oidcserver.replace('/oidc-core/oauth2/authorize', '/oidc-session');
+
+    if (!ctx.oidcserver) {
+      // infoEndpoint = config.sessionApi.endpoint;
+      // ctx.oidcserver = infoEndpoint;
+      return reject({message: "no oidc server"});
     }
-    else {
-      ctx.oidcserver = infoEndpoint = config.sessionApi.endpoint;
-    }
+
+    let infoEndpoint = ctx.oidcserver.replace('/oidc-core/oauth2/authorize', '/oidc-session');
 
     const options = {
             method: 'GET',
@@ -169,6 +180,7 @@ function inquireOidcSessionId(ctx) {
       }
     });
   });
+
 }
 
 
@@ -231,8 +243,8 @@ app.get('/login', function (request, response) {
       response.render('login', ctx.viewData);
     }
     else {
-      response.status(404);
-      response.render('error404', {
+      response.status(404)
+      .render('error404', {
         mainMessage: "the txid is not known.",
         title : "bad txid"
       });
@@ -247,7 +259,11 @@ app.get('/login', function (request, response) {
   Promise.resolve(context)
     .then(inquireOidcSessionId)
     .then(renderLogin)
-    .catch(logError);
+    .catch(e => {
+      logError(e);
+      response.status(404)
+        .render('error400', e);
+    });
 
 });
 
@@ -351,7 +367,7 @@ app.post('/validateLoginAndConsent', function (request, response) {
 
 // respond to the consent form postback
 app.post('/grantConsent', function (request, response) {
-  console.log('BODY: ' + JSON.stringify(request.body));
+  console.log('/grantConsent BODY: ' + JSON.stringify(request.body));
   if ( ! request.body.redirect_uri) {
     response.status(400);
     response.render('error', { errorMessage : 'Bad request' });
@@ -368,10 +384,10 @@ app.post('/grantConsent', function (request, response) {
     return;
   }
 
-
   Promise.resolve({
       userInfo : JSON.parse(base64Decode(request.body.userProfile)),
       txid : request.body.sessionid,
+      response_type : request.body.response_type,
       oidcserver : request.body.oidcserver
     })
     .then(postAuthorization)
@@ -397,6 +413,15 @@ app.get('/*', function (request, response) {
       mainMessage : 'There\'s nothing to see here.',
       title : 'That\'s 404 dude!'
     });
+});
+
+
+process.on('exit', function (code) {
+   console.log('Script terminating with code %s', code);
+});
+
+process.on('uncaughtException', function (err) {
+    console.log(err.stack);
 });
 
 

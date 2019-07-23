@@ -76,7 +76,7 @@
         </Step>
         <Step>
           <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
-          <Name>Java-GenerateIdToken-1</Name>
+          <Name>GenerateJWT-1</Name>
         </Step>
         <Step>
           <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
@@ -132,14 +132,13 @@
         <Step>
           <!-- generate a JWT (id_token), form 2 -->
           <Condition>response_type_id_token = true AND response_type_code = false AND response_type_token = false</Condition>
-          <Name>Java-GenerateIdToken-2</Name>
+          <Name>GenerateJWT-2</Name>
         </Step>
 
         <Step>
           <!-- generate a JWT (id_token), form 1 -->
           <Condition>response_type_id_token = true AND (response_type_code = true OR response_type_token = true)</Condition>
-
-          <Name>Java-GenerateIdToken-1</Name>
+          <Name>GenerateJWT-1</Name>
         </Step>
 
         <Step><Name>JS-ConstructResponse</Name></Step>

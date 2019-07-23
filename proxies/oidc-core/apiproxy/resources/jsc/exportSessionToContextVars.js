@@ -1,3 +1,4 @@
+/* global context */
 /*
  * set context variables from application session data (JSON String)
  *
@@ -11,18 +12,22 @@ var sessionData = context.getVariable("session.Payload"),
       'nonce',
       'redirect_uri',
       'client_id',
-      'apiProductName',
       'req_state',
-      'req_scope'
-    ];
+      'req_scope',
+      'appName',
+      'appLogoUrl'
+  ];
 
 // Set flow variables
 namesToExport.forEach(function(name){
   context.setVariable(name, hash[name]);
 });
-if (hash.response_type_code) {
+if (hash.response_type_code && hash.response_type_code == "true") {
   context.setVariable("code", "code");
 }
-if (hash.response_type_token) {
+if (hash.response_type_id_token && hash.response_type_id_token == "true") {
+  context.setVariable("id_token", "id_token");
+}
+if (hash.response_type_token && hash.response_type_token == "true") {
   context.setVariable("token", "token");
 }

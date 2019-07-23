@@ -1,11 +1,10 @@
 <AssignMessage name="AV-JWT-Vars">
-  <DisplayName>Assign: ID Token Payload</DisplayName>
   <AssignVariable>
-    <Name>aud</Name>
+    <Name>jwt_aud</Name>
     <Ref>client_id</Ref>
   </AssignVariable>
   <AssignVariable>
-    <Name>sub</Name>
+    <Name>jwt_sub</Name>
     <Ref>request.formparam.email</Ref>
   </AssignVariable>
   <AssignVariable>
@@ -14,7 +13,11 @@
   </AssignVariable>
   <AssignVariable>
     <Name>jwt_expires_in</Name>
-    <Value>566</Value>
+    <Value>300s</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>jwt_issuer</Name>
+    <Template>{request.header.x-forwarded-proto}://{request.header.host}{proxy.basepath}</Template>
   </AssignVariable>
   <AssignVariable>
     <Name>nonce</Name>
@@ -52,22 +55,20 @@
     <Name>token_type</Name>
     <Value>Bearer</Value>
   </AssignVariable>
-  <!-- overwrites scope retrieved from session -->
+  <!-- optionally overwrites scope retrieved from session -->
   <AssignVariable>
     <Name>scope</Name>
     <Ref>request.formparam.req_scope</Ref>
   </AssignVariable>
+
   <AssignVariable>
     <Name>sessionid</Name>
     <Ref>request.formparam.sessionid</Ref>
   </AssignVariable>
   <AssignVariable>
-    <Name>secret</Name>
-    <Ref>oauthv2client.Get-Application-Attributes.client_secret</Ref>
-  </AssignVariable>
-  <AssignVariable>
-    <Name>baas_access_token</Name>
-    <Ref>request.formparam.baas_access_token</Ref>
+    <Name>private.secretkey</Name>
+    <!-- ideally this should be at least 32 bytes  -->
+    <Template>{oauthv2client.Get-Application-Attributes.client_secret}</Template>
   </AssignVariable>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <AssignTo createNew="false" transport="http" type="request"/>

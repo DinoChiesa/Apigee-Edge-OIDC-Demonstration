@@ -1,8 +1,7 @@
 <OAuthV2 name="OAuthV2-GenerateAccessToken-Implicit">
-  <DisplayName>OAuthV2: Generate Access Token Implicit</DisplayName>
   <ExternalAuthorization>false</ExternalAuthorization>
   <Operation>GenerateAccessTokenImplicitGrant</Operation>
-  <SupportedGrantTypes/>
+  <GrantType>grant_type</GrantType>
   <Scope>req_scope</Scope>
   <ClientId>client_id</ClientId>
   <ResponseType>token</ResponseType>
@@ -10,8 +9,7 @@
   <Attributes>
     <Attribute name="sessionid" ref="sessionid" display="true"/>
     <Attribute name="scope" ref="req_scope" display="true"/>
-    <Attribute name="sub" ref="sub" display="true"/>
-    <Attribute name="baas_access_token" ref="baas_access_token" display="true"/>
+    <Attribute name="sub" ref="jwt_sub" display="true"/>
   </Attributes>
-  <UserName>sub</UserName>
+  <UserName>jwt_sub</UserName>
 </OAuthV2>
