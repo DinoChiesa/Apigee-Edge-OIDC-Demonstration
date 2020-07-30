@@ -1,0 +1,16 @@
+<GenerateJWT name='GenerateJWT-1'>
+  <Algorithm>HS256</Algorithm>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <SecretKey>
+    <Value ref='private.secretkey'/>
+  </SecretKey>
+  <Subject ref='jwt_sub'/>
+  <Issuer ref='jwt_issuer'/>
+  <Audience ref='jwt_aud'/>
+  <ExpiresIn ref='jwt_expires_in'/>
+  <AdditionalClaims>
+    <Claim name='nonce' ref='nonce'/>
+    <Claim name='roles' ref='roles'/>
+  </AdditionalClaims>
+  <OutputVariable>output_jwt</OutputVariable>
+</GenerateJWT>

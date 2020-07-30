@@ -1,6 +1,6 @@
 {
   "name": "oidcConsent1-server-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "~2.5.5",
@@ -10,7 +10,7 @@
     "request": "^2.88.0"
   },
   "engines": {
-    "node": ">=10.15.1",
+    "node": ">=11.11.0",
     "npm": ">=6.1.0"
   }
 }

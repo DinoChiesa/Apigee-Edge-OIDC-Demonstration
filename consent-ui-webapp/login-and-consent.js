@@ -94,7 +94,8 @@ function getGrantType(responseType) {
 
 function postAuthorization (ctx) {
   return new Promise((resolve, reject) => {
-    var authEndpoint = ctx.oidcserver? ctx.oidcserver.replace('/authorize', '/auth') : config.authEndpoint,
+    // the path to the auth endpoint needs to be consistent with the API proxy
+    var authEndpoint = ctx.oidcroot? ctx.oidcroot + '/oauth2/auth' : config.authEndpoint,
         formParams = copyHash(ctx.userInfo),
         options = {
           method: 'POST',
@@ -138,17 +139,15 @@ function inquireOidcSessionId(ctx) {
   return new Promise((resolve, reject) => {
     // send a query to Edge to ask about the OIDC session
 
-    if (!ctx.oidcserver) {
-      // infoEndpoint = config.sessionApi.endpoint;
-      // ctx.oidcserver = infoEndpoint;
+    if (!ctx.oidcroot) {
       return reject({message: "no oidc server"});
     }
 
-    let infoEndpoint = ctx.oidcserver.replace('/oidc-core/oauth2/authorize', '/oidc-session');
+    let sessionEndpoint = ctx.oidcroot + '/session';
 
     const options = {
             method: 'GET',
-            uri:  infoEndpoint + '/info?' + querystring.stringify({ txid : ctx.txid }),
+            uri:  sessionEndpoint + '/info?' + querystring.stringify({ txid : ctx.txid }),
             headers: {
               'apikey': config.sessionApi.apikey,
               'Accept': 'application/json'
@@ -238,7 +237,7 @@ app.get('/login', function (request, response) {
       ctx.viewData = copyHash(ctx.sessionInfo);
       ctx.viewData.action = 'Sign in';
       ctx.viewData.txid = ctx.txid;
-      ctx.viewData.oidcserver = ctx.oidcserver;
+      ctx.viewData.oidcroot = ctx.oidcroot;
       ctx.viewData.errorMessage = null; // must be present and null
       response.render('login', ctx.viewData);
     }
@@ -253,8 +252,8 @@ app.get('/login', function (request, response) {
   }
 
   var context = { txid: request.query.sessionid };
-  if (request.query.oidcserver) {
-    context.oidcserver = decodeURIComponent(request.query.oidcserver);
+  if (request.query.oidcroot) {
+    context.oidcroot = decodeURIComponent(request.query.oidcroot);
   }
   Promise.resolve(context)
     .then(inquireOidcSessionId)
@@ -296,7 +295,7 @@ app.post('/validateLoginAndConsent', function (request, response) {
     response.render('login', {
       action        : 'Sign in',
       txid          : request.body.sessionid,
-      oidcserver    : request.body.oidcserver,
+      oidcroot      : request.body.oidcroot,
       client_id     : request.body.client_id,
       response_type : request.body.response_type,
       req_scope     : request.body.requestedScopes,
@@ -325,7 +324,7 @@ app.post('/validateLoginAndConsent', function (request, response) {
         response.render('login', {
           action        : 'Sign in',
           txid          : ctx.txid,
-          oidcserver    : request.body.oidcserver,
+          oidcroot      : request.body.oidcroot,
           client_id     : request.body.client_id,
           response_type : request.body.response_type,
           req_scope     : request.body.requestedScopes,
@@ -346,7 +345,7 @@ app.post('/validateLoginAndConsent', function (request, response) {
       response.render('consent', {
         action        : 'Consent',
         txid          : ctx.txid,
-        oidcserver    : request.body.oidcserver,
+        oidcroot      : request.body.oidcroot,
         client_id     : request.body.client_id,
         response_type : request.body.response_type,
         req_scope     : request.body.requestedScopes,
@@ -388,7 +387,7 @@ app.post('/grantConsent', function (request, response) {
       userInfo : JSON.parse(base64Decode(request.body.userProfile)),
       txid : request.body.sessionid,
       response_type : request.body.response_type,
-      oidcserver : request.body.oidcserver
+      oidcroot : request.body.oidcroot
     })
     .then(postAuthorization)
     .then(function(ctx){

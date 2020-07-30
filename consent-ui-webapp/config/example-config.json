@@ -1,0 +1,7 @@
+{
+  "sessionApi" : {
+    "apikey" : "this-must-be-replaced"
+  },
+  "localUserDb" : "../config/localUserDb.js",
+  "authSystem" : "local"
+}
