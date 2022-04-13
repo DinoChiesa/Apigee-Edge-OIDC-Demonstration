@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "dependencies": {
     "apigee-edge-js": "^0.4.10",
-    "async": "^2.6.0",
+    "async": "^3.2.2",
     "merge": "^1.2.1",
     "mkdirp": "^0.5.1",
     "netrc": "0.1.3",
