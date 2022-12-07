@@ -2,9 +2,9 @@
   "name": "oidcConsent1-server-node",
   "version": "0.1.1",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "ejs": "~2.5.5",
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "morgan": "^1.9.1",
     "querystring": "~0.2.0",
     "request": "^2.88.0"
